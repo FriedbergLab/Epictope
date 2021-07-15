@@ -109,7 +109,7 @@ def multi_blast(db_path, fasta_file, evalue = 1e-3, outfmt = 5):
             gapextend = 2,
             reward = 1, 
             penalty = -3, 
-            out = "../outputs/" + db.split("/")[3] + "_blast.xml",)
+            out = "outputs/" + db.split("/")[3] + "_blast.xml",)
         stdout, stderr  = blastn_cline()
 
 #function to return inputs as objects as single element lists.
@@ -146,15 +146,18 @@ def to_fasta(seq_list, protein = False, name_dict = ""):
         if len(filtered_match) > 1:
             if protein == False:
                 SeqIO.write(filtered_match, 
-                    "../outputs/" + match[0].name + ".fasta", "fasta")
+                    "outputs/" + match[0].name + ".fasta", "fasta")
             else:
                 for newseq in filtered_match: 
                     temp = newseq.translate()
                     newseq.seq = temp.seq
                 SeqIO.write(filtered_match,
-                    "../outputs/" + match[0].name + ".fasta", "fasta")
+                    "outputs/" + match[0].name + ".fasta", "fasta")
 
-
+#function to convert a character string consisting of fasta information into a 
+#Biopython SeqIO object.
+#Input: character string consisting of fasta ID and sequence.
+#Output Biopython SeqIO object.
 def string_to_fasta(string, desc = "", name = ""):
     if string == "":
         rec = SeqRecord(Seq(""), id = "", name = name, description = desc)
@@ -167,5 +170,23 @@ def string_to_fasta(string, desc = "", name = ""):
                 name = name, 
                 description = desc)
     return(rec)
+
+#function to determine if an input file exists.
+#Input:  a filename
+#Output: opens file if exists, reports if file does not exist. 
+def is_valid_file(parser, arg):
+    if not os.path.exists(arg):
+        parser.error("The file %s does not exist!" % arg)
+    else:
+        return open(arg, 'r')  # return an open file handle
+
+#function to determine if output folder exists, if it does not exist
+#create the output folder.
+#Input: folder name
+#Output: No output if folder exists, creates folder if does not exist.
+def does_folder_exist(folder):
+    if os.path.exists(folder) == False:
+        os.mkdir(folder)
+        print("Created " + folder + " folder.")
 ###
 
