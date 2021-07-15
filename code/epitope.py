@@ -2,9 +2,16 @@ from epitope_helper import *
 import pandas
 import requests
 import re
+import argparse
+import sys
 
-def query_to_msa():
-    tf = pandas.read_csv("../data/zebra_transcription_factors.csv")
+def query_to_msa(filename):
+
+    #Check if output folder exists
+    does_folder_exist("outputs")
+
+    #read in input file
+    tf = pandas.read_csv(filename)
     
     #fetch transcripts from ensembl API
     ts = list(map(fetch_transcripts, tf['ensemblID']))
@@ -25,12 +32,12 @@ def query_to_msa():
     SeqIO.write(blast_queries, "blastqueries.fasta", "fasta")
 
     #blast against folder of databases
-    multi_blast("../data/blastdbs", "blastqueries.fasta", evalue = 1e-3, outfmt = 5)
+    multi_blast("data/blastdbs", "blastqueries.fasta", evalue = 1e-3, outfmt = 5)
 
     #parse blast xml output and fetch full transcripts for hits
     output_list = []
-    for file in list_files("../outputs", ".xml"):
-        print("parsing" + file)
+    for file in list_files("outputs", ".xml"):
+        print("parsing " + file)
         seqs = list(map(fetch_transcripts, xml_parse(file)))
         max_seqs = list(map(get_max_str, as_list(seqs)))
         fastas = list(map(string_to_fasta, max_seqs))
@@ -39,14 +46,14 @@ def query_to_msa():
     #combine matching transcripts
     matches = tuple(zip(blast_queries, *output_list))
 
-    descriptions = ["Denio_renio", "Xenopus_tropicalis", "Mus_msculus", "Gallus_gallus", "Homo_sapiens", "Takifugu_rubripes"]
+    descriptions = ["Danio_renio", "Xenopus_tropicalis", "Mus_musculus", "Gallus_gallus", "Homo_sapiens", "Takifugu_rubripes"]
     desc_matches = desc_fastas(matches, descriptions)
     #write matching transcripts to individual fastas
     #using protein sequence
     to_fasta(desc_matches, protein = True)
 
     #MSA with muscle.
-    for fasta in list_files("../outputs", ".fasta"):
+    for fasta in list_files("outputs", ".fasta"):
         muscle_cline = MuscleCommandline(
         input=fasta, 
         out=fasta.split(".fasta")[0] + ".txt")
@@ -54,5 +61,15 @@ def query_to_msa():
 
 ###
 if __name__ == '__main__':
-    query_to_msa()
+    parser = argparse.ArgumentParser(description= 
+    'Takes an input file of genes and associated Ensembl IDs, retrieves \
+    associated sequences from the Ensembl REST API, BLASTs the sequences against \
+    local blasteable databases, and then performs a MSA with the homologous sequences.')
+
+    parser.add_argument("-i", "--input", dest="filename", required=True,
+                    help="input file with two columns geneName and ensemblID", metavar="CSV file",
+                    type=lambda x: is_valid_file(parser, x))
+
+    args = parser.parse_args() 
+    query_to_msa(args.filename)
 
