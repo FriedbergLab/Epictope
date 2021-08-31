@@ -1,40 +1,42 @@
+#!/usr/bin/python3
 from epitope_helper import *
 import pandas
 import requests
 import re
 import argparse
 import sys
+import csv
 
 def query_to_msa(filename):
 
-    #Check if output folder exists
+    #Check if output folder exists.
     does_folder_exist("outputs")
 
-    #read in input file
+    #read in input file.
     tf = pandas.read_csv(filename)
     
-    #fetch transcripts from ensembl API
+    #fetch transcripts from ensembl API.
     ts = list(map(fetch_transcripts, tf['ensemblID']))
     
-    #select longest sequence
+    #select longest sequence.
     max_ts = list(map(get_max_str, ts)) 
 
-    #convert string to SeqIO fasta object
+    #convert string to SeqIO fasta object.
     fastas = list(map(string_to_fasta, max_ts))
 
-    #add gene names to fasta object
+    #add gene names to fasta object.
     blast_queries0 = name_fastas(fastas, tf["geneName"])
 
-    #filter out queries where no transcript was returned
+    #filter out queries where no transcript was returned.
     blast_queries = [ele for ele in blast_queries0 if str(ele.seq)!=""]
 
-    #Write blast queries to file
+    #Write blast queries to file.
     SeqIO.write(blast_queries, "blastqueries.fasta", "fasta")
 
-    #blast against folder of databases
+    #blast against folder of databases.
     multi_blast("data/blastdbs", "blastqueries.fasta", evalue = 1e-3, outfmt = 5)
 
-    #parse blast xml output and fetch full transcripts for hits
+    #parse blast xml output and fetch full transcripts for hits.
     output_list = []
     for file in list_files("outputs", ".xml"):
         print("parsing " + file)
@@ -43,12 +45,12 @@ def query_to_msa(filename):
         fastas = list(map(string_to_fasta, max_seqs))
         output_list.append(fastas)
 
-    #combine matching transcripts
+    #combine matching transcripts.
     matches = tuple(zip(blast_queries, *output_list))
 
     descriptions = ["Danio_renio", "Xenopus_tropicalis", "Mus_musculus", "Gallus_gallus", "Homo_sapiens", "Takifugu_rubripes"]
     desc_matches = desc_fastas(matches, descriptions)
-    #write matching transcripts to individual fastas
+    #write matching transcripts to individual fastas.
     #using protein sequence
     to_fasta(desc_matches, protein = True)
 
@@ -56,8 +58,22 @@ def query_to_msa(filename):
     for fasta in list_files("outputs", ".fasta"):
         muscle_cline = MuscleCommandline(
         input=fasta, 
-        out=fasta.split(".fasta")[0] + ".txt")
+        clw = True, 
+        out=fasta.split(".fasta")[0] + ".clw")
         stdout, stderr = muscle_cline()
+
+   	#parse muscle txt output and calculate shannon entropy for each column.
+   	#write result to csv file.
+    with open('outputs/entropies.csv', 'w', encoding='UTF8', newline='') as f:
+    	writer = csv.writer(f)
+    	for file in list_files("outputs", ".clw"):
+        	#print("calculating entropy of" + file)
+        	res = shannon_entropy_list_msa(AlignIO.read(file, "clustal"))
+        	res.insert(0, file.split("/")[1].split(".")[0])
+        	writer.writerow(res)
+    f.close()
+        	
+
 
 ###
 if __name__ == '__main__':
