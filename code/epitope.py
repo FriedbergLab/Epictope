@@ -34,7 +34,27 @@ def query_to_msa(filename):
     SeqIO.write(blast_queries, "blastqueries.fasta", "fasta")
 
     #blast against folder of databases.
-    multi_blast("data/blastdbs", "blastqueries.fasta", evalue = 1e-3, outfmt = 5)
+    multi_blast("../data/blastdbs", "blastqueries.fasta", evalue = 1e-3, outfmt = 5)
+
+
+
+    def xml_parse(xmlpath):
+    # Initate ensembleRest object and lists
+    id_list = []
+    # Parse records from xml output.
+    for record in NCBIXML.parse(open(xmlpath)): 
+        try:
+            id_temp = record.alignments[0].title.split(" ")[1].split(".")[0]
+        # If not hit from blast query, will return IndexError.  
+        # Append "" if no hit to maintain index order of queries.
+        except IndexError:
+            id_temp = ""
+        id_list.append(id_temp)
+
+    return(id_list)
+    output_list = []
+    for file in list_files("../outputs", ".xml"):
+        xml_parse(file)
 
     #parse blast xml output and fetch full transcripts for hits.
     output_list = []
@@ -46,28 +66,33 @@ def query_to_msa(filename):
         output_list.append(fastas)
 
     #combine matching transcripts.
-    blasts = tuple(zip(blast_queries, *output_list))
-    
-    #add alphaFold sequences (converst blast seqs to protein)
-    alphafold_seqs = fetch_alphas("outputs/AlphaFoldPredictions_Features")
-    
-    #combine blast with alphafold
-    matches = add_alphas(blasts, alphafold_seqs)
-    
-    #add description names
-    descriptions = ["Danio_renio", "Xenopus_tropicalis", "Mus_musculus", "Gallus_gallus", "Homo_sapiens", "Takifugu_rubripes", "AlphaFold"]
-    desc_matches = desc_fastas(matches, descriptions)
+    matches = tuple(zip(blast_queries, *output_list))
 
+    descriptions = "Danio_renio", "Xenopus_tropicalis", "Mus_musculus", "Gallus_gallus", "Homo_sapiens", "Takifugu_rubripes"]
+    desc_matches = desc_fastas(matches, descriptions)
     #write matching transcripts to individual fastas.
-    to_fasta(desc_matches)
+    #using protein sequence
+    to_fasta(desc_matches, protein = True)
 
     #MSA with muscle.
-    for fasta in list_files("outputs/fastas", ".fasta"):
+    for fasta in list_files("outputs", ".fasta"):
         muscle_cline = MuscleCommandline(
         input=fasta, 
         clw = True, 
         out=fasta.split(".fasta")[0] + ".clw")
         stdout, stderr = muscle_cline()
+
+   	#parse muscle txt output and calculate shannon entropy for each column.
+   	#write result to csv file.
+    with open('outputs/entropies.csv', 'w', encoding='UTF8', newline='') as f:
+    	writer = csv.writer(f)
+    	for file in list_files("outputs", ".clw"):
+        	#print("calculating entropy of" + file)
+        	res = shannon_entropy_list_msa(AlignIO.read(file, "clustal"))
+        	res.insert(0, file.split("/")[1].split(".")[0])
+        	writer.writerow(res)
+    f.close()
+        	
 
 
 ###

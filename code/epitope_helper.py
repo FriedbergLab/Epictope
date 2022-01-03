@@ -141,17 +141,19 @@ def xml_parse(xmlpath):
 #option to convert nucleotide sequence to protein sequence. 
 #Input
 #Output
-def to_fasta(seq_list, name_dict = ""):
+def to_fasta(seq_list, protein = False, name_dict = ""):
    # Write matching sequences to fastas for msa.
     for match in seq_list:
         filtered_match = list(filter(None, match))
         if len(filtered_match) > 1:
-            if match[0].name == "<unknown id>":
                 SeqIO.write(filtered_match, 
-                    "../outputs/fastas/" + "unknown" + ".fasta", "fasta")
+                    "outputs/" + match[0].name + ".fasta", "fasta")
             else:
+                for newseq in filtered_match: 
+                    temp = newseq.translate()
+                    newseq.seq = temp.seq
                 SeqIO.write(filtered_match,
-                    "../outputs/fastas/" + match[0].name + ".fasta", "fasta")
+                    "outputs/" + match[0].name + ".fasta", "fasta")
 
 #function to convert a character string consisting of fasta information into a 
 #Biopython SeqIO object.
@@ -214,40 +216,3 @@ def shannon_entropy_list_msa(alignment_file):
         list_input = list(alignment_file[:, col_no])
         shannon_entropy_list.append(shannon_entropy(list_input))
     return shannon_entropy_list
-
-
-def read_alpha(file):
-    data = pandas.read_csv(file, sep = "\t")
-    data.columns = ["chain_id", "residue_no", "residue", "secondary_struct", "surface_area"]
-    return(data)
-
-
-def alpha_seq(named_data):
-    seq = "".join(list(named_data[0]["residue"]))
-    rec = SeqRecord(Seq(seq), id = "AlphaFold Sequence", name = named_data[1], description = "")
-    return(rec)
-
-
-def seq_translate(SeqRecord):
-    SeqRecord.seq = SeqRecord.translate().seq
-    return(SeqRecord)
-
-
-def add_alphas(matches, alpha_seqs):
-    res = list()
-    for match in matches:
-        for alpha in alpha_seqs:
-            if match[0].name + ".txt" == alpha.name :
-                temp = list(map(seq_translate, list(match)))
-                temp.append(alpha)
-                res.append(temp)
-    return(res)
-
-
-def fetch_alphas(alphafold_folder):
-    alphafold_files = list_files(alphafold_folder, "txt")
-    alphafold_data = list(map(read_alpha, alphafold_files))
-    names = os.listdir(alphafold_folder)
-    named_data = list(zip(alphafold_data, names))
-    alphafold_seqs = list(map(alpha_seq, named_data))
-    return(alphafold_seqs)
