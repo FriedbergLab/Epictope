@@ -9,40 +9,66 @@ import csv
 
 def query_to_alphafold(filename, species):
 
-    #Check if output folder exists.
-    does_folder_exist("outputs")
-
-    #read in input file.
+    ## read in input file
     tf = pandas.read_csv(filename)
-    
-    # fetch uniprot sequence from AlphaFold website
-    uniprot_pages = [fetch_uniprot(p, species) for p in tf
 
-    #fetch transcripts from ensembl API.
-    ts = list(map(fetch_transcripts, tf['ensemblID']))
-    
-    #select longest sequence.
-    max_ts = list(map(get_max_str, ts)) 
+    # search alphafold for protein entry from species
+    print("Searching Alphafold...")
+    alphafold_pages = [search_alphafold(p, params["species"]) for p in tf["geneName"]]
 
-    #convert string to SeqIO fasta object.
-    fastas = list(map(string_to_fasta, max_ts))
+    # search for links to uniprot entry
+    uniprot_links = list(map(lambda x: search_link(x, link = "http://www.uniprot.org/uniprot/.[^\s\"]*")+".fasta", alphafold_pages))
 
-    #add gene names to fasta object.
-    blast_queries0 = name_fastas(fastas, tf["geneName"])
+    # if no results found, remove from queries
+    neg_indices = [idx for idx, s in enumerate(uniprot_links) if 'No result' in s]
+    delete_multiple_element(alphafold_pages, neg_indices)
+    delete_multiple_element(uniprot_links, neg_indices)
 
-    #filter out queries where no transcript was returned.
-    blast_queries = [ele for ele in blast_queries0 if str(ele.seq)!=""]
+    # search for links for alphafold entry
+    entry_links = list(map(lambda x: re.sub("\.", "https://alphafold.ebi.ac.uk/", search_link(x, link = "./entry/.[^\s\"]*")), alphafold_pages))
 
-    #Write blast queries to file.
-    SeqIO.write(blast_queries, "blastqueries.fasta", "fasta")
+    # search alphafold page for pdb links
+    entry_pages = [render(x) for x in entry_links]
+    pdb_links = list(map(lambda x: search_link(x, link = "https.[^\s]*.pdb"), entry_pages))
 
-    #blast against folder of databases.
-    multi_blast("../data/blastdbs", "blastqueries.fasta", evalue = 1e-3, outfmt = 5)
 
+    # download sequence from uniprot fasta
+    print("Downloading fasta files...")
+    fastas = list(map(fetch_content, uniprot_links))
+    named_fastas = dict(zip(tf['geneName'], fastas))
+
+    # write sequences to file
+    seq_list = []
+    for key, value in named_fastas.items():
+        value = value.decode("utf-8")
+        seq = re.search("[A-Z]{10,}", value.replace("\n", "")).group()
+        rec = SeqRecord(Seq(seq), 
+                id = key, 
+                name = key, 
+                description = "")
+        seq_list.append(rec)
+
+    print("Writing fasta sequences to file...")
+    SeqIO.write(seq_list, params["data_file"]+"blast_queries.fasta", "fasta")
+
+    # download pdb files for queried proteins
+    does_folder_exist(params["data_file"]+"pdb", create = True)
+    print("Downloading pdb entries...")
+    pdb = list(map(fetch_content, pdb_links))
+    named_pdb = dict(zip(tf['geneName'], pdb))
+
+    for key, value in named_pdb.items():
+        f = open(params["data_file"]+"pdb/"+key+".pdb", 'wb')
+        f.write(value)
+        f.close()
+
+    # blast sequences
+    print("BLASTing for similar proteins...")
+    multi_blast(params["data_file"]+"blastdb", params["data_file"]+"blast_queries.fasta", evalue = 1e-3, outfmt = 5)
 
     #parse blast xml output and fetch full transcripts for hits.
     output_list = []
-    for file in list_files("outputs", ".xml"):
+    for file in list_files("../outputs", ".xml"):
         print("parsing " + file)
         seqs = list(map(fetch_transcripts, xml_parse(file)))
         max_seqs = list(map(get_max_str, as_list(seqs)))
@@ -50,38 +76,29 @@ def query_to_alphafold(filename, species):
         output_list.append(fastas)
 
     #combine matching transcripts.
-    matches = tuple(zip(blast_queries, *output_list))
+    matches = tuple(zip(seq_list, *output_list))
 
-    descriptions = "Danio_renio", "Xenopus_tropicalis", "Mus_musculus", "Gallus_gallus", "Homo_sapiens", "Takifugu_rubripes"]
+    # add animal descriptions
+    descriptions = list(map(string_strip, list_files("../outputs", ".xml")))
+    descriptions.insert(0, params["species"])
     desc_matches = desc_fastas(matches, descriptions)
-    #write matching transcripts to individual fastas.
-    #using protein sequence
+
+    # write protein sequences for multiple species to file
     to_fasta(desc_matches, protein = True)
 
-    #MSA with muscle.
-    for fasta in list_files("outputs", ".fasta"):
+    #MSA protein sequences with muscle.
+    print("Performing MSA with muscle...")
+    for fasta in list_files("../outputs", ".fasta"):
         muscle_cline = MuscleCommandline(
         input=fasta, 
         clw = True, 
         out=fasta.split(".fasta")[0] + ".clw")
         stdout, stderr = muscle_cline()
 
-   	#parse muscle txt output and calculate shannon entropy for each column.
-   	#write result to csv file.
-    with open('outputs/entropies.csv', 'w', encoding='UTF8', newline='') as f:
-    	writer = csv.writer(f)
-    	for file in list_files("outputs", ".clw"):
-        	#print("calculating entropy of" + file)
-        	res = shannon_entropy_list_msa(AlignIO.read(file, "clustal"))
-        	res.insert(0, file.split("/")[1].split(".")[0])
-        	writer.writerow(res)
-    f.close()
-
+    # print gene names where no results.
     print("No results returned for:")
     for i in neg_indices:
         print(tf.geneName[i])
-        	
-
 
 ###
 if __name__ == '__main__':
@@ -93,15 +110,17 @@ if __name__ == '__main__':
     parser.add_argument("-i", "--input", dest="filename", required=True,
                     help="single column text file with gene name queries", metavar="txt file",
                     type=lambda x: is_valid_file(parser, x))
-    parser.add_argument("-c", "--config", dest="config", required = True, 
+    parser.add_argument("-c", "--config", dest="config", required = False, 
                     help = "path to config.cfg file with parameter values", metavar="cfg file",
-                    default = "code/config.yml",
+                    default = "code/config.yaml",
                     type=lambda x: is_valid_file(parser, x))
 
     args = parser.parse_args() 
 
-    with open(args.config, 'r') as file:
-        params = yaml.safe_load(file)
+    params = yaml.safe_load(args.config)
 
-    query_to_msa(args.filename, species)
+    query_to_alphafold(args.filename, params["species"])
+    print("Operation complete.")
+
+
 
