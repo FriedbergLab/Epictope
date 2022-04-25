@@ -228,13 +228,13 @@ def to_fasta(seq_list, params, protein = False, name_dict = ""):
         if len(filtered_match) > 1:
             if protein == True:
                 SeqIO.write(filtered_match, 
-                    params["data_file"] + match[0].name + ".fasta", "fasta")
+                    params["output_file"] + match[0].name + ".fasta", "fasta")
             else:
                 for newseq in filtered_match: 
                     temp = newseq.translate()
                     newseq.seq = temp.seq
                 SeqIO.write(filtered_match,
-                    params["data_file"] + match[0].name + ".fasta", "fasta")
+                    params["output_file"] + match[0].name + ".fasta", "fasta")
 
 
 def shannon_entropy(list_input):
