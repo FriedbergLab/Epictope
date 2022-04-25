@@ -204,7 +204,7 @@ def string_to_fasta(string, desc = "", name = ""):
 def string_strip(string):
     """strip the folder argument from a string.
     """
-    res = string.split("/")[2].split("_blast")[0]
+    res = string.split("/")[1].split("_blast")[0]
     return(res)
 
 def desc_fastas(fastas, desc):
@@ -221,12 +221,12 @@ def desc_fastas(fastas, desc):
     return(desc_fastas)   
 
 
-def to_fasta(seq_list, protein = False, name_dict = ""):
+def to_fasta(seq_list, params, protein = False, name_dict = ""):
    # Write matching sequences to fastas for msa.
     for match in seq_list:
         filtered_match = list(filter(None, match))
         if len(filtered_match) > 1:
-            if protein == False:
+            if protein == True:
                 SeqIO.write(filtered_match, 
                     params["data_file"] + match[0].name + ".fasta", "fasta")
             else:

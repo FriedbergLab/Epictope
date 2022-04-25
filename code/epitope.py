@@ -68,7 +68,7 @@ def query_to_alphafold(filename, species):
 
     #parse blast xml output and fetch full transcripts for hits.
     output_list = []
-    for file in list_files("../outputs", ".xml"):
+    for file in list_files(params["output_file"], ".xml"):
         print("parsing " + file)
         seqs = list(map(fetch_transcripts, xml_parse(file)))
         max_seqs = list(map(get_max_str, as_list(seqs)))
@@ -79,16 +79,16 @@ def query_to_alphafold(filename, species):
     matches = tuple(zip(seq_list, *output_list))
 
     # add animal descriptions
-    descriptions = list(map(string_strip, list_files("../outputs", ".xml")))
+    descriptions = list(map(string_strip, list_files(params["output_file"], ".xml")))
     descriptions.insert(0, params["species"])
     desc_matches = desc_fastas(matches, descriptions)
 
     # write protein sequences for multiple species to file
-    to_fasta(desc_matches, protein = True)
+    to_fasta(desc_matches, protein = True, params = params)
 
     #MSA protein sequences with muscle.
     print("Performing MSA with muscle...")
-    for fasta in list_files("../outputs", ".fasta"):
+    for fasta in list_files(params["output_file"], ".fasta"):
         muscle_cline = MuscleCommandline(
         input=fasta, 
         clw = True, 

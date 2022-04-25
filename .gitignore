@@ -1,5 +1,4 @@
-code/old
 data/
 outputs/
-figures/
-
+code/chromedrive_linux64
+*.deb

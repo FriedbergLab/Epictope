@@ -1,0 +1,4 @@
+#PARAMETERS
+species: 'Danio rerio'
+output_file: 'outputs/'
+data_file:  'data/'
