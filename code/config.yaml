@@ -1,4 +1,6 @@
 #PARAMETERS
-species: 'Danio rerio'
+#species: 'Danio rerio'
+species: '7955'
 output_file: 'outputs/'
 data_file:  'data/'
+low_evidence: True

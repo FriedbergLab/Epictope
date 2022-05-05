@@ -22,37 +22,49 @@ import requests
 import time
 import yaml
 
-# Loads a dynamic webpage.
-def render(url, driver_loc = 'code/chromedriver_linux64/chromedriver'):
-    """Loads a dynamic webpage
-    using chromedriver
-    """
-    s = Service(driver_loc)
-    opts = Options()
-    opts.add_argument("--disable-extensions")
-    opts.add_argument("--disable-gpu")
-    opts.add_argument("--no-sandbox") # linux only
-    opts.add_argument("--headless")
-    browser = webdriver.Chrome(service=s, options = opts)
-    browser.get(url)
-    time.sleep(10)
-    soup = BeautifulSoup(browser.page_source, features = "lxml")
-    browser.quit()
-    return(soup)
+def uniprot_mapping(identifier, fromtype = "GENENAME", totype = "SWISSPROT", taxa_id = 9606):
+    """Takes an identifier, and types of identifier 
+    (to and from), and calls the UniProt mapping service"""
+    base = 'http://www.uniprot.org'
+    tool = 'mapping'
+    params = {'from':fromtype,
+                'to':totype,
+                'format':'tab',
+                'query':identifier,
+                'taxon': taxa_id,
+    }
+    #urllib turns the dictionary params into an encoded url suffix
+    data = urllib.parse.urlencode(params)
+    #construct the UniProt URL
+    url = base+'/'+tool+'?'+data
+    #and grab the mapping
+    response = urllib.request.urlopen(url)
+    #response.read() provides tab-delimited output of the mapping
+    string = str(response.read())
+    #clean string
+    clean_string = re.sub(r'\\t|\\n|b\'|\'','_', string).split("_")
+    #remove empty elements at the beginning
+    full_string = list(filter(None, clean_string))
+    #lengthen string to 4 elements
+    while(len(full_string) < 4):
+        full_string.append(None)
+    return(full_string)
 
-def search_alphafold(query, organism, server = "https://alphafold.ebi.ac.uk/search/text/"):
-    """Searches Alphafold database
-    for protein query, optional argument for 
-    species.
-    """
-    if organism != "" :
-        organism_ext = "?organismScientificName=" + re.sub(" ", "%20", organism)
-    else:
-        organism_ext = ""
-    alphafold_url = server + query + organism_ext
-    res = render(alphafold_url)
-    return(res)
+def uniprot_to_df(sp_list, queries):
+    '''Converts string output from swissprot id mapping to 
+    Pandas Dataframe'''
+    sp_df = pandas.DataFrame(columns = ['id_no', "geneName"])
+    sp_df = pandas.DataFrame(sp_list).iloc[:, [3]]
+    sp_df.columns = ["id_no"]
+    sp_df["geneName"] = list(queries)
+    return(sp_df)
 
+def fetch_content(url):
+    """retrives content
+    from URL
+    """
+    res = requests.get(url, allow_redirects = True)
+    return(res.content)
 
 def fetch_content(url):
     """retrives content
@@ -225,16 +237,15 @@ def to_fasta(seq_list, params, protein = False, name_dict = ""):
    # Write matching sequences to fastas for msa.
     for match in seq_list:
         filtered_match = list(filter(None, match))
-        if len(filtered_match) > 1:
-            if protein == True:
-                SeqIO.write(filtered_match, 
-                    params["output_file"] + match[0].name + ".fasta", "fasta")
-            else:
-                for newseq in filtered_match: 
-                    temp = newseq.translate()
-                    newseq.seq = temp.seq
-                SeqIO.write(filtered_match,
-                    params["output_file"] + match[0].name + ".fasta", "fasta")
+        if protein == True:
+            SeqIO.write(filtered_match, 
+                params["output_file"] + match[0].id + ".fasta", "fasta")
+        else:
+            for newseq in filtered_match: 
+                temp = newseq.translate()
+                newseq.seq = temp.seq
+            SeqIO.write(filtered_match,
+                params["output_file"] + match[0].id + ".fasta", "fasta")
 
 
 def shannon_entropy(list_input):

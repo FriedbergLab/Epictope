@@ -7,46 +7,45 @@ import argparse
 import sys
 import csv
 
-def query_to_alphafold(filename, species):
+def query_to_alphafold(filename, params):
 
-    ## read in input file
     tf = pandas.read_csv(filename)
 
-    # search alphafold for protein entry from species
-    print("Searching Alphafold...")
-    alphafold_pages = [search_alphafold(p, params["species"]) for p in tf["geneName"]]
+    if(len(tf) < 1):
+        print("No gene names found.")
+        sys.exit()
 
-    # search for links to uniprot entry
-    uniprot_links = list(map(lambda x: search_link(x, link = "http://www.uniprot.org/uniprot/.[^\s\"]*")+".fasta", alphafold_pages))
+    # convert gene names to uniprot ID
+    swissprot_list = [uniprot_mapping(p, taxa_id = params["species"]) for p in tf["geneName"]]
 
-    # if no results found, remove from queries
-    neg_indices = [idx for idx, s in enumerate(uniprot_links) if 'No result' in s]
-    delete_multiple_element(alphafold_pages, neg_indices)
-    delete_multiple_element(uniprot_links, neg_indices)
+    swissprot_df = uniprot_to_df(swissprot_list, queries = tf["geneName"])
 
-    # search for links for alphafold entry
-    entry_links = list(map(lambda x: re.sub("\.", "https://alphafold.ebi.ac.uk/", search_link(x, link = "./entry/.[^\s\"]*")), alphafold_pages))
+    pos = pandas.DataFrame(columns = ['id_no', "geneName"])
+    pos = pandas.concat([pos, swissprot_df[swissprot_df['id_no'].notnull()]])
 
-    # search alphafold page for pdb links
-    entry_pages = [render(x) for x in entry_links]
-    pdb_links = list(map(lambda x: search_link(x, link = "https.[^\s]*.pdb"), entry_pages))
+    neg = pandas.DataFrame(columns = ['id_no', "geneName"])
+    neg = pandas.concat([neg, swissprot_df[swissprot_df['id_no'].isnull()]])
 
+    if(len(neg) > 0):
+        alt_list = [uniprot_mapping(p, totype = "AC", taxa_id = params["species"]) for p in neg["geneName"]]
+        alt_df = uniprot_to_df(alt_list, queries = neg["geneName"])
+        pos = pandas.concat([pos, alt_df[alt_df["id_no"].notnull()]])
 
-    # download sequence from uniprot fasta
-    print("Downloading fasta files...")
-    fastas = list(map(fetch_content, uniprot_links))
+    fastas = [fetch_content("http://www.uniprot.org/uniprot/"+i+".fasta") for i in pos["id_no"]]
     named_fastas = dict(zip(tf['geneName'], fastas))
 
     # write sequences to file
     seq_list = []
     for key, value in named_fastas.items():
         value = value.decode("utf-8")
+        start = re.search("GN", value).start()
+        result = value[start:].split("=")[1].strip()
         seq = re.search("[A-Z]{10,}", value.replace("\n", "")).group()
         rec = SeqRecord(Seq(seq), 
                 id = key, 
-                name = key, 
+                name = result, 
                 description = "")
-        seq_list.append(rec)
+    seq_list.append(rec)
 
     print("Writing fasta sequences to file...")
     SeqIO.write(seq_list, params["data_file"]+"blast_queries.fasta", "fasta")
@@ -117,9 +116,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args() 
 
-    params = yaml.safe_load(args.config)
+    parameters = yaml.safe_load(args.config)
 
-    query_to_alphafold(args.filename, params["species"])
+    query_to_alphafold(args.filename, params = parameters)
     print("Operation complete.")
 
 
