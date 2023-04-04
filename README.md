@@ -43,7 +43,8 @@ Set the epitope tag insertion site parameters in provided `config` file.
 ```
 
 Folder Structure
-- `code/`: 
+- `R/`: R version
+- `python`: Python version 
 - `data/`: 
   - `models/`: Folder for downloaded query pdb files
   - `CDS`: Folder for CDS files for species in MSA
