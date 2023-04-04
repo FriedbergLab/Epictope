@@ -36,7 +36,7 @@ Programs
 
 ## Usage
 
-Set the epitope tag insertion site parameters in provided config file. 
+Set the epitope tag insertion site parameters in provided `config` file. 
 
 ```
 # Rscript single_score.R
