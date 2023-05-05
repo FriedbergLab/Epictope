@@ -10,7 +10,7 @@ Simplified code for identifying ideal epitope tag insertion sites for proteins.
 
 ## Config
 
-`install.R` 
+A user customizeable config file determines the folder structure, species for multiple sequence alignment, feature weights, and query input protein. 
 
 ## Installation
 
@@ -43,8 +43,8 @@ Set the epitope tag insertion site parameters in provided `config` file.
 ```
 
 Folder Structure
-- `R/`: R version
-- `python`: Python version 
+- `R/`: R implementation
+- `python`: Python implementation 
 - `data/`: 
   - `models/`: Folder for downloaded query pdb files
   - `CDS`: Folder for CDS files for species in MSA
