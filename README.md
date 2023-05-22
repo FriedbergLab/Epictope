@@ -1,4 +1,4 @@
-# Epitope Tag
+# EpicTope
 
 Simplified code for identifying ideal epitope tag insertion sites for proteins.
 
