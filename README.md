@@ -30,6 +30,12 @@ Once dependencies have been installed, you will need to install the `epictope` R
 ```
 remotes::install_github("henrichung/epitope_tag")
 ```
+
+If you do not want to open R itself and are working entirely from the terminal, you can use
+
+```
+R -e 'remotes::install_github("henrichung/epitope_tag")'
+```
 ## Usage
 
 #### Workflows
