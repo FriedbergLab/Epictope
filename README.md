@@ -19,9 +19,9 @@ conda install -c bioconda blast
 conda install -c bioconda muscle
 conda install -c salilab dssp
 conda install -c conda-forge r-base
-conda install -c r r-stringi
-conda install -c r r-openssl
-conda install -c r r-remotes
+conda install -c conda-forge r-stringi
+conda install -c conda-forge r-openssl
+conda install -c conda-forge r-remotes
 ```
 ## Installation
 
