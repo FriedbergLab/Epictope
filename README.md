@@ -41,18 +41,25 @@ remotes::install_github("henrichung/epitope_tag")
 ```
 
 
-## Usage
+#### Usage
 
-Example workflows with the `epictope` package are available in the "vignettes" folder. Workflows are available as both R Markdown Documents and Jupyter notebooks. These 
+Example workflows with the `epictope` package are available in the "vignettes" folder. Workflows are available as both R Markdown Documents and Jupyter notebooks. These workflows describe the `epictope` workflow step by step in an interactive session or an IDE.
 
-```
-# Rscript single_score.R
-```
+
+Alternatively, the wrapper scripts `install.R` and `single_score.R` are provided in the "scripts" folder of this repo to enable one-touch instant operation.
+To run, download the `install.R` and `single_score.R` scripts and place them into your current project directory in a `code` folder. Your project directory should look as follows;
 
 Folder Structure
-- `R/`: R implementation
-- `python`: Python implementation 
-- `data/`: 
-  - `models/`: Folder for downloaded query pdb files
-  - `CDS`: Folder for CDS files for species in MSA
-- `outputs/`: 
+- `project/`: Project folder
+  - `code/`: 
+    - `install.R`: downloads and creates blasteable databases
+    - `single_score.R`: runs tagging software on a single protein
+
+
+From the terminal, the scripts can be run as follows.
+```
+Rscript code/install.R
+Rscript code/single_score "P57102" # replace 'P57102' with the UniprotID for your protein of interest.
+```
+
+Additionally, an example `config.R` file is provided to change any of the user-customizeable values during feature scoring. The values listed in the example config are the default values used by `epictope`.

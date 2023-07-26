@@ -4,9 +4,6 @@ outputFolder <- "outputs"
 model_folder <- paste0(dataFolder, "/models")
 cds_folder <- paste0(dataFolder, "/CDS")
 
-# inputs
-query <- "O57472"
-
 # define species to run MSA against
 species <- c("bos_taurus", "canis_lupus_familiaris", "gallus_gallus", "homo_sapiens", "mus_musculus", "takifugu_rubripes", "xenopus_tropicalis")
 
