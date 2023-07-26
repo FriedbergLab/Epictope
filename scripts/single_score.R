@@ -1,15 +1,13 @@
-# Script Title: Epitope Scoring function
-# Description: Calculates a epitope tag insertion score for a uniprot id
-# Author: HC
-# Date: 04/03/23
-
 # load required packages
 library(epictope)
 rm(list = ls())
 
-# config file
-source("code/config.R")
+# setup file structure
+setup_files()
+# check config
+check_config()
 
+args <- commandArgs(trailingOnly = TRUE); query <- args[1]
 # download uniprot information 
 uniprot_fields <- c("accession", "id", "gene_names", "xref_alphafolddb", "sequence", "organism_name", "organism_id")
 uniprot_data <- query_uniProt(query = query, fields = uniprot_fields)
