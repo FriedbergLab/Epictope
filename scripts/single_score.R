@@ -2,11 +2,9 @@
 library(epictope)
 rm(list = ls())
 
-# setup file structure
+# helper functions
 setup_files()
-# check config
 check_config()
-
 args <- commandArgs(trailingOnly = TRUE); query <- args[1]
 # download uniprot information 
 uniprot_fields <- c("accession", "id", "gene_names", "xref_alphafolddb", "sequence", "organism_name", "organism_id")
@@ -21,14 +19,13 @@ dssp_res <- dssp_command(alphafold_file)
 dssp_df <- parse_dssp(dssp_res)
 
 # retrieve iupred/anchor2 disordered binding regions
-iupred_df <- idpr::iupredAnchor(query, plotResults = FALSE)
-colnames(iupred_df) <- tolower(colnames(iupred_df))
+iupred_df <- iupredAnchor(query)
 
 # blast query aa sequence
 seq <- Biostrings::AAStringSet(uniprot_data$Sequence, start=NA, end=NA, width=NA, use.names=TRUE)
 
 # list of amino acid files to blast against
-aa_files <-  list.files(cds_folder, pattern = "all.amino.fa$", full.names = TRUE, recursive = TRUE)
+aa_files <-  list.files(cds_folder, pattern = "\\.all.fa$", full.names = TRUE, recursive = TRUE)
 names(aa_files) <- aa_files
 
 # blast
@@ -44,8 +41,7 @@ blast_seqs[[query]] <- seq
 blast_stringset  <- Biostrings::AAStringSet(unlist(lapply(blast_seqs, function(.x){.x[[1]]})))
 
 # multiple sequence alignment
-msa_res <-  rMSA::muscle(blast_stringset)
-
+msa_res <-  muscle(blast_stringset)
 # shannon entropy calculation
 shannon_df <- shannon_reshape(msa_res, query)
 
