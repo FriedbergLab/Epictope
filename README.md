@@ -39,11 +39,17 @@ Example workflows with the `epictope` package are available in the **vignettes**
 Alternatively, the wrapper scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-touch instant operation.
 To run, download the `install.R` and `single_score.R` scripts and place them into your current project directory in a *code* folder. Your project directory should look as follows;
 
+You can fetch these files using wget
+
+```
+wget https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/install.R
+wget https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R
+```
+
 Folder Structure
 - `project/`: Project folder
-  - `code/`: 
-    - `install.R`: downloads and creates blasteable databases
-    - `single_score.R`: runs tagging software on a single protein
+  - `install.R`: downloads and creates blasteable databases
+  - `single_score.R`: runs tagging software on a single protein
 
 
 From the terminal, the scripts can be run as follows.
