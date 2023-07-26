@@ -15,7 +15,7 @@ make_protein_db <- function(gz_file) {
   system(paste0("gunzip -d -k ", gz_file))
 
   # Remove the ".gz" extension from the file name
-  file <- tools::file_path_sans_ext(gz_file)
+  file <- gsub(".gz", "", gz_file)
 
   # Create the protein BLASTable database
   system(command = paste("makeblastdb -in ", file, " -dbtype prot"))
