@@ -22,14 +22,12 @@ conda install -c conda-forge r-base
 ```
 ## Installation
 
-Once dependencies have been installed, you will need to open R and install the `remotes` packages. This will allow you to install the `epictope` package from this Github repo.
+Once dependencies have been installed, you will need to install the `epictope` R package from this github repo. We can use the `remotes` package to do this.
 
 ```
 install.packages("remotes")
 remotes::install_github("henrichung/epitope_tag")
 ```
-
-
 ## Usage
 
 
