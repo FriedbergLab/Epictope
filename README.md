@@ -52,12 +52,6 @@ wget https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/insta
 wget https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R
 ```
 
-Folder Structure
-- `project/`: Project folder
-  - `install.R`: downloads and creates blasteable databases
-  - `single_score.R`: runs tagging software on a single protein
-
-
 From the terminal, the scripts can be run as follows.
 ```
 Rscript install.R # this downloads and creates the blasteable databases for the MSA
