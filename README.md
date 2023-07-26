@@ -21,20 +21,22 @@ conda install -c salilab dssp
 conda install -c conda-forge r-base
 conda install -c conda-forge r-stringi
 conda install -c conda-forge r-openssl
-conda install -c conda-forge r-remotes
 ```
 ## Installation
 
 Once dependencies have been installed, you will need to install the `epictope` R package from this github repo. We can use the `remotes` package to do this. Run the following lines in your R install.
 
 ```
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
 remotes::install_github("henrichung/epitope_tag")
 ```
 
 If you do not want to open R itself and are working entirely from the terminal, you can use
 
 ```
-R -e 'remotes::install_github("henrichung/epitope_tag")'
+Rscript -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes'); remotes::install_github('henrichung/epitope_tag')"
 ```
 ## Usage
 
