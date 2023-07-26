@@ -10,7 +10,7 @@ Simplified code for identifying ideal epitope tag insertion sites for proteins.
 
 ## Dependencies
 
-To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. Fortunately, these packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda[website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. 
+To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. Fortunately, these packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda[website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. Conda may give you a ClobberError while installing, this can be ignored.
 
 ```
 conda create -n epictope
@@ -19,10 +19,12 @@ conda install -c bioconda blast
 conda install -c bioconda muscle
 conda install -c salilab dssp
 conda install -c conda-forge r-base
+conda install -c r r-stringi
+conda install -c r r-openssl
 ```
 ## Installation
 
-Once dependencies have been installed, you will need to install the `epictope` R package from this github repo. We can use the `remotes` package to do this.
+Once dependencies have been installed, you will need to install the `epictope` R package from this github repo. We can use the `remotes` package to do this. Run the following lines in your R install.
 
 ```
 install.packages("remotes")
@@ -30,9 +32,8 @@ remotes::install_github("henrichung/epitope_tag")
 ```
 ## Usage
 
-
 #### Workflows
-Example workflows with the `epictope` package are available in the **vignettes** folder. Workflows are available as both R Markdown Documents and Jupyter notebooks. These workflows describe the `epictope` workflow step by step in an interactive session or an IDE.
+Example workflows with the `epictope` package are available in the **vignettes** folder. Workflows are available as both R Markdown Documents and Jupyter notebooks. These workflows go through the `epictope` workflow step by step in an interactive session or an IDE.
 
 #### Wrappers
 Alternatively, the wrapper scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-touch instant operation.

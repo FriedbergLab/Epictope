@@ -4,12 +4,9 @@
 # Date: 04/03/23
 
 # load required packages
-pkg_names <- c("UniProt.ws","httr", "rMSA", "Biostrings")
-for (pkg in pkg_names){library(pkg, character.only = TRUE)}
+library(epictope)
 rm(list = ls())
 
-# helper functions
-source("code/ss_helper.R")
 # config file
 source("code/config.R")
 
