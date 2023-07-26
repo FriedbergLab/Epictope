@@ -5,7 +5,6 @@ model_folder <- paste0(dataFolder, "/models")
 cds_folder <- paste0(dataFolder, "/CDS")
 
 # inputs
-# ex: "O57472"
 query <- "O57472"
 
 # define species to run MSA against
