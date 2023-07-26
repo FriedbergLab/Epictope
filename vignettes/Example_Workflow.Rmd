@@ -1,0 +1,202 @@
+---
+title: "Example Workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sample_Workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+### Introduction
+This vignette describes an example workflow using the `epictope` package to identify the optimal tagging location for a protein of interest. The optimal location is identified by considering four features; sequence conservation, secondary structure, solvent accessible surface area, and disordered binding regions. These four features are factored into a scoring function that calculates a cumulative score for each position in the protein. The weight of each feature and how they contribute to the final score can be defined by the user. Below, we work through a simple example of this workflow for a protein of interest.
+
+### Installation
+
+The `epictope` package can be installed from github. First, you will need to download the `devtools` package. The devtools package provide a function to directly download a package from a github repository. 
+
+```{r, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("henrichung/epitope_tag")
+```
+
+#### Dependencies
+To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. Fortunately, these packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda[website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. 
+
+```{r, eval = FALSE}
+conda create -n epictope
+conda activate epictope
+conda install -c bioconda blast
+conda install -c bioconda muscle
+conda install -c salilab dssp
+conda install -c conda-forge r-base
+conda install -c r r-stringi
+conda install -c r r-openssl
+```
+
+#### Verify installation
+Once you have installed `epictope` through R and installed the requisite dependencies through conda, it is good practice to verify installation and recognition of these programs before proceeding. First, verify that `epictope` itself is loadable. Then, use the provided " The output of each '.FindExecutable' command show display the path of the program on your system. 
+
+```{r, eval = FALSE}
+#library(epictope) # check if epictope is installed and loadable
+epictope::.FindExecutable("muscle") # looks for muscle executable
+epictope::.FindExecutable("blastp") # looks for blast executable
+epictope::.FindExecutable("mkdssp") # looks for dssp executable
+```
+
+#### Config 
+
+A config file is used to determine the protein of interest, how its features will be calculated and scored. The user can set and specify a config file themselves with the `check_config()` function. Otherwise, the function will load default configurations. The `check_config()` function must be used to initalize the configuration settings each run.
+
+```{r, eval = FALSE}
+# using a predefined config file
+check_config("code/config.txt")
+# Using default settings
+check_config()
+```
+
+The default configuration loaded is shown below. These settings can be changed by simply copy-pasting the following lines into a text file, adjusting the numbers, and then calling that text file with `check_config()`. 
+
+```{r, eval = FALSE}
+# define species to run MSA against
+species <- c("bos_taurus", "canis_lupus_familiaris", "gallus_gallus", "homo_sapiens", "mus_musculus", "takifugu_rubripes", "xenopus_tropicalis")
+
+# weights for tagging features
+h_weight = 1.5 # shannon entropy
+rsa_weight = 1 # solvent accessable surface area
+ss_weight = 1 # secondary structure
+br_weight = 1 # disordered binding region
+
+# value for secondary structures, must be 0-1.
+# each letter refers to a type of secondary structure
+# the number indicates the value or "suitability" for tagging.
+# values should be from 0-1, with higher values indicating greater
+# suitability for tagging.
+ss_key <- list(
+    "G" = 0, 
+    "H" = 0, 
+    "I" = 0,
+    "E" = 0, 
+    "C" = 1,
+    "T" = 0.5, 
+    "B" = 0.5, 
+    "S" = 0.5)
+
+# reference values for maximum solvent accesibility of amino acids.
+# default values estimate from the following study;
+# https://doi.org/10.1371/journal.pone.0080635
+aa <- c("A", "R", "N", "D", "C", "E", "Q", "G", "H", "I", "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V")
+empirical <- c(121, 265, 187, 187, 148, 214, 214, 97, 216, 195, 191, 230, 203, 228, 154, 143, 163, 264, 255, 165)
+max_sasa <- setNames(empirical, aa)
+
+```
+
+#### Folder structure
+
+The epitope software uses a specified file structure to store the required sequence and temporary data while performing its scoring function. This folder structure is outlined as follows;
+```{r, eval = FALSE}
+project_folder
+├── code
+│   ├── config # configuration file for scoring 
+│   ├── install.R # helper script
+│   └── single_score.R
+├── data
+│   ├── CDS # for protein sequences in coding regions for each organism in the MSA
+│   └── models # for the predicted alphafold2 structure for a protein of interest
+├── outputs # for the output scores
+└── README.md
+```
+
+To set up this structure, we include a simple function `setup_files` to create this structure for you. 
+```{r, eval = FALSE}
+setup_files()
+```
+### Workflow
+
+Once everything has been set up, you can use the package functions to identify optimal tagging locations as follows. To start, you will need to download the protein sequences of the organisms you want to compare against for a multiple sequence alignment. After this is run, your `data/CDS` folder should be populated with "gz" files of the MSA organism's protein sequences.
+
+
+
+
+```{r, eval = FALSE}
+# search for the default species specified with the config file 
+protein_links <- ftp_search(species = species)
+# download the sequences
+lapply(protein_links, ftp_download)
+
+# you can also specify the sequences at the time of search 
+protein_links <- ftp_search(species = c("Mus_musculus", "Bos_taurus"))
+lapply(protein_links, ftp_download)
+```
+
+Next, you will need to specify the *UniprotID* of the protein you are interested in. UniProt is a freely accessible database of protein sequence and functional information. A single gene can encode multiple protein isoforms through different processes called alternative splicing. Starting with the UniprotID allows to know what specific protein we are working with. 
+
+```{r, eval = FALSE}
+query <- "P57102" # The UniprotID of the protein we are looking for.
+uniprot_fields <- c("accession", "id", "gene_names", "xref_alphafolddb", "sequence", "organism_name", "organism_id")
+# The features for the uniprot id we are interested in retieving. The most important category xref_alphafolddb.
+# We include the other labels to double check we have fetched the correct protein.
+uniprot_data <- query_uniProt(query = query, fields = uniprot_fields)
+```
+
+Using the AlphafoldID, we can retrieve the predicted structure for the protein of interest. We then run DSSP to predict the secondary structures from the Alphafold2 PDB file and parse out the results to a dataframe.
+
+```{r, eval = FALSE}
+# download associated alphafold2 pdb
+alphafold_file <- fetch_alphafold(gsub(";", "", uniprot_data$AlphaFoldDB))
+# calculate dssp on alphafold2 pdb file
+dssp_res <- dssp_command(alphafold_file)
+# parse and read in dssp
+dssp_df <- parse_dssp(dssp_res)
+```
+
+The UniprotID is also the acceptable query for IUPRED2A. IUPred2A is a combined web interface that allows to identify disordered protein regions using IUPred2 and disordered binding regions using ANCHOR2. 
+```{r, eval = FALSE}
+iupred_df <- iupredAnchor(query) # dataframe for iupred results
+```
+
+To perform the multiple sequence alignment (MSA). We must identify homologous proteins in our selected species. To do this, we will BLAST our query protein against the proteome of the selected species. We will sort the BLAST results by their E value, and select highest match by the lowest E value. We will then run muscle to perform the MSA. Using the MSA result, we can calculate the shannnon entropy for each position. 
+```{r, eval = FALSE}
+# blast query aa sequence
+seq <- Biostrings::AAStringSet(uniprot_data$Sequence, start=NA, end=NA, width=NA, use.names=TRUE) # Use the sequence identified by the UniprotID
+
+# list of proteome files to blast against
+aa_files <-  list.files(cds_folder, pattern = "\\.all.fa$", full.names = TRUE, recursive = TRUE) # list the protein files in the CDS folder
+names(aa_files) <- aa_files # name them to keep track of which animal each result came from
+
+# blast
+blast_results <- lapply(aa_files, function(.x){protein_blast(seq, .x)})
+
+# take the highest blast match according to E score 
+find_best_match <- function(.x){head(.x[base::order(.x$E),], 1)} # sort by E value and take best match
+blast_best_match <- lapply(blast_results, find_best_match) # find best match
+blast_seqs <- lapply(blast_best_match, fetch_sequences) # retrieve the sequence for the best match
+
+# Assign the sequence of our query protein to the MSA
+blast_seqs[[query]] <- seq
+blast_stringset  <- Biostrings::AAStringSet(unlist(lapply(blast_seqs, function(.x){.x[[1]]})))
+
+# multiple sequence alignment
+msa_res <-  muscle(blast_stringset)
+# shannon entropy calculation
+shannon_df <- shannon_reshape(msa_res, query)
+
+```
+
+The final step is to combine the shannon entropy, secondary structure, and disordered binding region into a single dataframe. From there, we can calculate the solvent accessibility and tagging score for each position. The final output will be written to a file in the outputs folder.
+
+```{r, eval = FALSE}
+# join tagging features in dataframe
+features_df <- Reduce(function(x, y) merge(x, y, all=TRUE), list(shannon_df, dssp_df, iupred_df), accumulate=FALSE)
+colnames(features_df)
+# normalize features and calculate tagging score
+norm_feats_df <- calculate_scores(features_df)
+# write to file.
+res_df <- merge(norm_feats_df, features_df)
+write.csv(apply(res_df,2,as.character), file = paste0(outputFolder, "/", query, "_score.csv"))
+```
