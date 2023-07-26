@@ -21,13 +21,13 @@ conda install -c salilab dssp
 conda install -c conda-forge r-base
 conda install -c r r-stringi
 conda install -c r r-openssl
+conda install -c r r-remotes
 ```
 ## Installation
 
 Once dependencies have been installed, you will need to install the `epictope` R package from this github repo. We can use the `remotes` package to do this. Run the following lines in your R install.
 
 ```
-install.packages("remotes")
 remotes::install_github("henrichung/epitope_tag")
 ```
 ## Usage
@@ -54,8 +54,8 @@ Folder Structure
 
 From the terminal, the scripts can be run as follows.
 ```
-Rscript code/install.R
-Rscript code/single_score "P57102" # replace 'P57102' with the UniprotID for your protein of interest.
+Rscript install.R
+Rscript single_score "P57102" # replace 'P57102' with the UniprotID for your protein of interest.
 ```
 
 Additionally, an example `config.R` file is provided to change any of the user-customizeable values during feature scoring. The values listed in the example config are the default values used by `epictope`.
