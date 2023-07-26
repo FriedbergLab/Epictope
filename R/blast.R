@@ -69,7 +69,7 @@ predict.BLAST <-
     x <- newdata
 
     # get temp files and change working directory
-    wd <- tempdir()
+    wd <- temp_folder
     dir <- getwd()
     temp_file <- basename(tempfile(tmpdir = wd))
     on.exit({
