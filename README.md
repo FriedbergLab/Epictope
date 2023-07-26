@@ -32,9 +32,11 @@ remotes::install_github("henrichung/epitope_tag")
 
 ## Usage
 
+
+#### Workflows
 Example workflows with the `epictope` package are available in the **vignettes** folder. Workflows are available as both R Markdown Documents and Jupyter notebooks. These workflows describe the `epictope` workflow step by step in an interactive session or an IDE.
 
-
+#### Wrappers
 Alternatively, the wrapper scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-touch instant operation.
 To run, download the `install.R` and `single_score.R` scripts and place them into your current project directory in a *code* folder. Your project directory should look as follows;
 
