@@ -60,8 +60,10 @@ Folder Structure
 
 From the terminal, the scripts can be run as follows.
 ```
-Rscript install.R
+Rscript install.R # this downloads and creates the blasteable databases for the MSA
 Rscript single_score "P57102" # replace 'P57102' with the UniprotID for your protein of interest.
 ```
+
+
 
 Additionally, an example `config.R` file is provided to change any of the user-customizeable values during feature scoring. The values listed in the example config are the default values used by `epictope`.
