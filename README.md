@@ -16,20 +16,17 @@ This repository contains the code source of the R Epictope package, step-by-step
 
 ### Sequence conservation
 
-Sequence conservation is used to guide internal epitope-tagging approaches. Regions of relatively low conservation are unlikely to be involved in the critical function of the protein. To identify these regions for a protein of interest, we first BLAST the query protein against the proteomes of a diverse set of model organisms. By default, we compare the query sequence against the proteomes of Mus musculus (mouse), Bos taurus (cow), Canis lupus familiaris (dog), Gallus gallus (chicken), Homo sapiens (human), Takifugu rubripes (pufferfish), and Xenopus tropicalis (western clawed frog). We then identify the highest scoring match in each organism, sorted by the lowest E-value. We then align the retrieved sequences with the query protein using muscle, a multiple sequence alignment program, and calculate the shannon entropy at each position. We use Shannon entropy as a simple measure of the calculate the variability of amino acids at each position in the alignment. A lower Shannon entropy indicates low variability, or high sequence conservation at the position, and it should therefore be avoided for tag insertion. Conversely, a high Shannon entropy indicates a relatively low degree of sequence conservation, and potential suitability for tagging.
+Sequence conservation is used to guide internal epitope-tagging approaches. Regions of relatively low conservation are unlikely to be involved in the critical function of the protein. To identify these regions for a protein of interest, we first BLAST the query protein against the proteomes of a diverse set of model organisms. By default, we compare the query sequence against the proteomes of _Mus musculus_ (mouse), _Bos taurus_ (cow), _Canis lupus familiaris_ (dog), Gallus gallus (chicken), _Homo sapiens_ (human), _Takifugu rubripes_ (pufferfish), and _Xenopus tropicalis_ (western clawed frog). Using BLAST, we identify the highest scoring match in each organism, sorted by the lowest E-value. We then align the retrieved sequences with the query protein using MUSCLE, a multiple sequence alignment program, and calculate the shannon entropy at each position. We use [Shannon entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)) as a simple measure of the calculate the variability of amino acids at each position in the alignment. A lower Shannon entropy indicates low variability, or high sequence conservation at the position, and it should therefore be avoided for tag insertion. Conversly, a high Shannon entropy indicates a relatively low degree of sequence conservation, and potential suitability for tagging.
 
 
 <figure style="display: inline-block; text-align: center;">
   <img src="images/msa.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="75%">
-  <figcaption>Example Multiple Sequence Alignment for Tcf21 protein sequences from position 1 to 70. Amino acids identical between all species are in red, identical between at least three out of five species in blue. From this alignment, red regions would be extremely unfavorable to tag insertion. Figure from https://doi.org/10.1038/srep36986</figcaption>. Reproduced under Creative Commons CC-BY.
+  <figcaption>Example Multiple Sequence Alignment for Tcf21 protein sequences from position 1 to 70. The protein of interest or query is the tcf21 protein from Danio rerio (zebrafish). Amino acids identical between all species are in red, non-identical between at least one species in blue, and gaps are highlighted in yellow. From this alignment, red regions would be unfavorable to tag insertion.</figcaption>.
 </figure>
 
 ### Solvent accessibility
 
  Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the [Alphafold2 predicted structure from the European Bioinforamtics Institute (EBI)](https://alphafold.ebi.ac.uk/) as the source PDB for DSSP calculations.
-
-Insert _non copyrighted_ figure here.
-
 
 
 <!--
@@ -42,17 +39,20 @@ Insert non copyrighted figure here.
 
 ### Secondary structure
 
-Secondary structure, refers to the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), resisues in isolated Beta bridhes (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
+Secondary structure is the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), residues in isolated Beta bridges (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
 
 ### Disordered binding 
 
 Disordered binding regions are sections of a protein that do not have a well-defined structure on their own, but can undergo a disorder-to-order transition when they bind to specific protein partners. To avoid these regions, we use [ANCHOR2](https://iupred2a.elte.hu/), a tool that analyzes an amino acid sequence and returns a score of intrinsic disorder depending on a model of the estimated energy potential for residue interactions. To maintain consistency with other features, the disordered binding feature score is taken as 1 minus the ANCHOR2 score.
 
-
 ## Installation
 
-
 ### System requirements
+Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio.
+
+### Dependencies
+
+To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. 
 
 Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to  installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio. 
 
@@ -74,12 +74,9 @@ Alternatively, dependencies can be installed separately by first creating an emp
 ```
 conda create -n Epictope
 conda activate Epictope
-conda install -c bioconda blast
-conda install -c bioconda muscle
+conda install -c bioconda blast muscle
 conda install -c salilab dssp
-conda install -c conda-forge r-base
-conda install -c conda-forge r-stringi
-conda install -c conda-forge r-openssl
+conda install -c conda-forge r-base r-stringi r-openssl
 ```
 
 We also provide a simple wrapper scripts `environment_install.sh` for macOS/Linux and `environment_install.bat` for Windows, which issues the individual conda install commands as a single script. 
