@@ -17,17 +17,22 @@ This repository contains the code source of the R epictope package, step-by-step
 ### Sequence conservation
 Sequence conservation is used to guide internal epitope-tagging approaches. Regions of relatively low conservation are unlikely to be involved in the critical function of the protein. To identify these regions for a protein of interest, we first BLAST the query protein against the proteomes of a diverse set of model organisms. By default, we compare the query sequence against the proteomes of Mus musculus (mouse), Bos taurus (cow), Canis lupus familiaris (dog), Gallus gallus (horse), Homo sapiens (human), Takifugu rubripes (pufferfish), and Xenopus tropicalis (western clawed frog). We then identify the highest scoring match in each organism, sorted by the lowest E-value. We then align the retrieved sequences with the query protein using muscle, a multiple sequence alignment program, and calculate the shannon entropy at each position. We use Shannon entropy as a simple measure of the calculate the variability of amino acids at each position in the alignment. A lower Shannon entropy indicates low variability, or high sequence conservation at the position, and it should therefore be avoided for tag insertion. Conversly, a high Shannon entropy indicates a relatively low degree of sequence conservation, and potential suitability for tagging.
 
-<figure>
-  <img src="images/msa.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
-  <figcaption>Example Multiple Sequence Alignment for Tcf21 protein sequences from position 1 to 70. Amino acids identical between all species are in red, identical between at least three out of five species in blue. From this alignment, red regions would be extremely unfavorable to tag insertion.</figcaption>
-</figure>
 
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/msa.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="75%">
+  <figcaption>Example Multiple Sequence Alignment for Tcf21 protein sequences from position 1 to 70. Amino acids identical between all species are in red, identical between at least three out of five species in blue. From this alignment, red regions would be extremely unfavorable to tag insertion. Figure from https://doi.org/10.1038/srep36986</figcaption>
+</figure>
 
 ### Solvent accessibility
 
 Solvent accessibility, or Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the Alphafold2 predicted structure as the source PDB for DSSP calculations.
 
-![Alt text](images/rsa.png?raw=true "Example Solvent Accessible regions for 8 different proteins.")
+
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/rsa.png" alt="Alt text" title="Solvent Accessible Regions." width="75%">
+  <figcaption> Crystal structures of proteins with varying relative solvent-accessible surface area (given in parentheses). Buried residues, or inaccessible residues, are colored blue and solvent exposed residues are colored red. Figure from https://doi.org/10.1016/j.jmb.2013.06.019 .</figcaption>
+</figure>
+
 
 ### Secondary structure
 Secondary structure, or refers to the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), resisues in isolated Beta bridhes (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
