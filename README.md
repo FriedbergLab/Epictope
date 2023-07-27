@@ -42,7 +42,9 @@ Disordered binding regions are parts of the proteins that do not have a well-def
 
 ## Dependencies
 
-To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. For macOS/Linux, commands are issued at the terminal. For Windows, it is recommended to use conda through the Anaconda Prompt.
+To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment.
+
+ For macOS/Linux, commands are issued at the terminal. For Windows, it is recommended to use conda through the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
 
 
 Dependencies can be installed using the provided `epictope_environment.yml` using the following commands.
@@ -70,6 +72,7 @@ We also provide a simple wrapper scripts `environment_install.sh` for macOS/Linu
 # for macOS/Linux
 chmod +x environment_install.sh
 ./environment_install.sh
+
 # for Windows
 C:\ProgramData\Anaconda3\Scripts\Activate
 environment_install.bat
@@ -113,6 +116,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
     install.packages("remotes")
 }
 remotes::install_github("henrichung/epitope_tag")
+
 # using devtools
 if (!requireNamespace("devtools", quietly = TRUE)) {
     install.packages("devtools")
@@ -120,7 +124,7 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("henrichung/epitope_tag")
 ```
 
-We also provide additional resources outside the main packages, such as scripts to automate conda installation, wrapper scripts for the epictope workflow, and detailed step-by-step workflows as R Markdown Documents and Jupyter Notebooks. These can be downloaded from this repository through the webpage, or using git. 
+We also provide additional resources outside the main packages, such as scripts to automate conda installation, wrapper scripts for the epictope workflow, and detailed step-by-step workflows as R Markdown Documents and Jupyter Notebooks. These can be downloaded from this repository through the webpage, or using git. Git is available on both MacOS/Linux and Windows machines
 
 ```
 git clone https://github.com/henrichung/epitope_tag
