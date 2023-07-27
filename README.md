@@ -29,14 +29,6 @@ Sequence conservation is used to guide internal epitope-tagging approaches. Regi
  Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the [Alphafold2 predicted structure from the European Bioinforamtics Institute (EBI)](https://alphafold.ebi.ac.uk/) as the source PDB for DSSP calculations.
 
 
-<!--
-Insert non copyrighted figure here.
-<figure style="display: inline-block; text-align: center;">
-  <img src="images/rsa.png" alt="Alt text" title="Solvent Accessible Regions." width="75%">
-  <figcaption> Crystal structures of proteins with varying relative solvent-accessible surface area (given in parentheses). Buried residues, or inaccessible residues, are colored blue and solvent exposed residues are colored red. Figure from https://doi.org/10.1016/j.jmb.2013.06.019 .</figcaption>
-</figure>
--->
-
 ### Secondary structure
 
 Secondary structure is the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), residues in isolated Beta bridges (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
