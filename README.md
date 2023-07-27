@@ -1,10 +1,10 @@
-# EpicTope
+# Epictope
 
 Software for predicting epitope tag insertion sites in proteins.
 
-`EpiTtope` is a simple R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and solvent accessabilty to predict suitable internal locations for tag insertion.
+Epictope is an R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion.
 
-This repository contains the code source of the R epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package depends on local installations of BLAST, muscle, and DSSP to run. 
+This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can b eisntalled as a apckage with EpicTope). You will need at elast 3GB of disk space.
 
 ## Table of Contents
 - [Methodology](#methodology)
@@ -51,7 +51,7 @@ Disordered binding regions are sections of a protein that do not have a well-def
 ## Installation
 ### Dependencies
 
-To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and DSSP. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, run the following commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment.
+To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, muscle, and DSSP. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, run the following commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment.
 
  For macOS/Linux, commands are issued at the terminal. For Windows, it is recommended to use conda through the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
 
