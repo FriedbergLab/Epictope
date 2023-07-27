@@ -52,14 +52,11 @@ Disordered binding regions are sections of a protein that do not have a well-def
 ## Installation
 
 
-
-
 ### System requirements
 
 Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to  installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio. 
 
 ### Software dependencies
-
 
 To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named Epictope, and install the requisite packages into that environment. 
 
@@ -173,6 +170,10 @@ Each script can also be opened in an IDE such as Rstudio, and run interactively 
 
 The scoring function used by Epictope sums the calculated scores for each feature, assigning equal weight to thesecondary structure, disordered binding regions, and solvent accessabilty. Sequence conservation is weighted slightly higher, at 1.5 times the other features. The weight for each feature can be adjusted by the user using a "config.R" file. This file (shorthand for configuration) is used to adjust some of the tuneable parameters in Epictope. The configuration file allows the user to define the species used in the multiple sequence alignment, the values used to score the tag suitability of secondary structures, and the maximum solvent accessibility values to determine solvent accessibility. By default, Epictope will look for a config.R file in the working directory. If a file is not found, it will use default values. The example config.R value in scripts is populated with the default values used by Epictope.
 
+
+### Example run
+
+ADD AN EXAMPLE HERE
 ### License 
 
 Epictope is distributed open-source under the GPL3 license.
