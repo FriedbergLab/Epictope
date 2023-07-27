@@ -1,7 +1,8 @@
+# FOR MACOS/LINUX
 name: epictope
 channels:
   - bioconda
-  - salilab
+  - speleo3
   - conda-forge
 dependencies:
   - blast>=2.14.0

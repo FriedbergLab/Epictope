@@ -32,7 +32,7 @@ Sequence conservation is used to guide internal epitope-tagging approaches. Regi
 
 ### Solvent accessibility
 
- Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the [Alphafold2 predicted structure from the European Bioinforamtics Institute (EBI)](https://alphafold.ebi.ac.uk/) as the source PDB for DSSP calculations.
+ Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the [Alphafold2 predicted structure from the European Bioinformatics Institute (EBI)](https://alphafold.ebi.ac.uk/) as the source PDB for DSSP calculations.
 
 
 ### Secondary structure
@@ -52,56 +52,83 @@ Installing Epictope and its dependencies will require at least 3Gb of disk space
 
 To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. 
 
-Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to  installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio. 
+Installing Epictope and its dependencies will require at least 3GB of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to  installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio. 
 
 ### Software dependencies
 
 To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named Epictope, and install the requisite packages into that environment. 
 
-For macOS/Linux, commands are issued at the terminal. For Windows, it is use the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
+#### macOS/Linux installation
 
-Dependencies can be installed using the provided `Epictope_environment.yml` using the following commands. A BIOLOGIST WON"T KNOW WHAT YOU ARE TALKING ABOUT. AT THE VERY LEAST LINK THE FILE
+For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the provided `epictope_environment.yml` using the following commands. Download or copy-paste the contents of the epictope_environment.yml file [here](https://raw.githubusercontent.com/henrichung/epitope_tag/main/epictope_environment.yml). Place this file in your working directory or project folder and use one of the follow methods to install. 
 
+
+macOS/Linux method 1
 ```
-conda env create --file=Epictope_environment.yml
-conda activate Epictope
+conda env create --file=epictope_environment_linux.yml
+conda activate epictope
 ```
 
-Alternatively, dependencies can be installed separately by first creating an empty environment, activating the environment, and issuing install commands individually. This can resolve conflict issues that sometimes occur when installing via yml.
-
+macOS/Linux method 2
 ```
-conda create -n Epictope
-conda activate Epictope
+conda create epictope
+conda create -n epictope
+conda env update --file epictope_environment_linux.yml
+```
+
+macOS/Linux method 3
+```
+conda create -n epictope
+conda activate epictope
 conda install -c bioconda blast muscle
 conda install -c salilab dssp
 conda install -c conda-forge r-base r-stringi r-openssl
 ```
 
-We also provide a simple wrapper scripts `environment_install.sh` for macOS/Linux and `environment_install.bat` for Windows, which issues the individual conda install commands as a single script. 
+We also provide a simple wrapper scripts `environment_install.sh` for macOS/Linux to automate running of multiple commands. To run, download the script [here](https://raw.githubusercontent.com/henrichung/epitope_tag/main/environment_install.sh)
 
+macOS/Linux method 4
 ```
 # for macOS/Linux
 chmod +x environment_install.sh
 ./environment_install.sh
+```
 
+#### Windows installation
+
+Detailed instructions for conda installation Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html). Once installed, run the follow commands to install the R and DSSP dependencies. 
+
+BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found [here](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) for BLAST and [here](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to above, we provide simple wrapper scripts to install both. Wrapper scripts for [BLAST]() and [MUSCLE]()
+
+Windows method 1
+```
+conda env create --file=epictope_environment_windows.yml
+conda activate epictope
+```
+
+Windows method 2
+```
+conda create epictope
+conda create -n epictope
+conda env update --file epictope_environment_windows.yml
+```
+
+Windows method 3
+```
+conda create -n epictope
+conda activate epictope
+conda install -c bioconda blast muscle
+conda install -c speleo3 dssp
+conda install -c conda-forge r-base r-stringi r-openssl
+```
+
+macOS/Linux method 4
+```
 # for Windows
 C:\ProgramData\Anaconda3\Scripts\Activate
 environment_install.bat
 ```
-
-#### Example dependency installations on Linux/macOS
-
-Method 1
-```
-conda env create --file=Epictope_environment.yml
-conda activate Epictope
-```
-
-Method 2
-```
-chmod +x environment_install.sh
-./environment_install.sh
-```
+ For Windows, it is use the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
 
 #### Example dependency installations on Windows
 
@@ -115,8 +142,13 @@ conda activate Epictope
 Method 2
 ```
 C:\ProgramData\Anaconda3\Scripts\Activate
-environment_install.bat
+./environment_install.bat
+./install_blast.bat
+./install_muscle.bat
 ```
+
+Method 3
+
 ### Installing Epictope 
 
 Epictope is distributed as a R package. You can install it from this github repository using the *install_github* function from eiher the `remotes` or `devtools` R packages. This function is equivalent to the *install.packages()* function in base R, and should be entered in R through an interactive session or an IDE like RStudio.
@@ -127,7 +159,8 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
     install.packages("remotes")
 }
 remotes::install_github("henrichung/epitope_tag")
-
+```
+```
 # using devtools
 if (!requireNamespace("devtools", quietly = TRUE)) {
     install.packages("devtools")

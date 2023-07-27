@@ -1,0 +1,13 @@
+# FOR MACOS/LINUX
+name: epictope
+channels:
+  - bioconda
+  - salilab
+  - conda-forge
+dependencies:
+  - blast>=2.14.0
+  - muscle>=5.1
+  - dssp>=3.0.0
+  - r-base>=4.2.2
+  - r-stringi>=1.1.7
+  - r-openssl>=2.0.6
