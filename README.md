@@ -52,6 +52,7 @@ Disordered binding regions are sections of a protein that do not have a well-def
 ## Installation
 
 ### Dependencies
+
 To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, muscle, and DSSP. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, run the following commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment.
 
 =======
