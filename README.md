@@ -4,7 +4,7 @@ Software for predicting epitope tag insertion sites in proteins.
 
 Epictope is an R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion.
 
-This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can b eisntalled as a apckage with Epictope). You will need at elast 3GB of disk space.
+This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can be installed as a package with Epictope). You will need at least 3GB of disk space.
 
 ## Table of Contents
 - [Methodology](#methodology)
@@ -13,6 +13,12 @@ This repository contains the code source of the R Epictope package, step-by-step
 - [Usage](#usage)
 
 ## Methodology
+
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/workflow.png" alt="Alt text" title="Epictope workflow." width="75%">
+  <figcaption>Epictope workflow. Starting from a protein of interest, the Epictope workflow automates multiple sequence alignment, downloading of predicted protein structure from AlphaFold2, and fetching disordered binding regions from IUPred2A.</figcaption>.
+</figure>
+
 
 ### Sequence conservation
 
