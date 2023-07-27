@@ -21,7 +21,7 @@ Sequence conservation is used to guide internal epitope-tagging approaches. Regi
 
 <figure style="display: inline-block; text-align: center;">
   <img src="images/msa.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="75%">
-  <figcaption>Example Multiple Sequence Alignment for Tcf21 protein sequences from position 1 to 70. Amino acids identical between all species are in red, identical between at least three out of five species in blue. From this alignment, red regions would be extremely unfavorable to tag insertion. Figure from https://doi.org/10.1038/srep36986</figcaption>
+  <figcaption>Example Multiple Sequence Alignment for Tcf21 protein sequences from position 1 to 70. Amino acids identical between all species are in red, identical between at least three out of five species in blue. From this alignment, red regions would be extremely unfavorable to tag insertion. Figure from https://doi.org/10.1038/srep36986</figcaption>. Reproduced under Creative Commons CC-BY.
 </figure>
 
 ### Solvent accessibility
