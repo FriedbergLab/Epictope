@@ -15,6 +15,7 @@ This repository contains the code source of the R epictope package, step-by-step
 ## Methodology
 
 ### Sequence conservation
+
 Sequence conservation is used to guide internal epitope-tagging approaches. Regions of relatively low conservation are unlikely to be involved in the critical function of the protein. To identify these regions for a protein of interest, we first BLAST the query protein against the proteomes of a diverse set of model organisms. By default, we compare the query sequence against the proteomes of Mus musculus (mouse), Bos taurus (cow), Canis lupus familiaris (dog), Gallus gallus (horse), Homo sapiens (human), Takifugu rubripes (pufferfish), and Xenopus tropicalis (western clawed frog). We then identify the highest scoring match in each organism, sorted by the lowest E-value. We then align the retrieved sequences with the query protein using muscle, a multiple sequence alignment program, and calculate the shannon entropy at each position. We use Shannon entropy as a simple measure of the calculate the variability of amino acids at each position in the alignment. A lower Shannon entropy indicates low variability, or high sequence conservation at the position, and it should therefore be avoided for tag insertion. Conversly, a high Shannon entropy indicates a relatively low degree of sequence conservation, and potential suitability for tagging.
 
 
@@ -35,10 +36,12 @@ Solvent accessibility, or Relative Solvent Accessibility (RSA) is a measure of t
 
 
 ### Secondary structure
+
 Secondary structure, or refers to the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), resisues in isolated Beta bridhes (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
 
 ### Disordered binding 
-Disordered binding regions are parts of the proteins that do not have a well-defined structure on their own, but can undergo a disorder-to-order transition when they bind to specific protein partners. To avoid these regions, we use IUPRED2, a tool that analyzes an amino acid sequence and returns a score of intrinsic disorder depending on a model of the estimated energy potential for residue interactions. To maintain consistency with other features, the disordered binding freature score is taken as 1 minus the IUPRED2 return score.
+
+Disordered binding regions are parts of the proteins that do not have a well-defined structure on their own, but can undergo a disorder-to-order transition when they bind to specific protein partners. To avoid these regions, we use ANCHOR2, a tool that analyzes an amino acid sequence and returns a score of intrinsic disorder depending on a model of the estimated energy potential for residue interactions. To maintain consistency with other features, the disordered binding feature score is taken as 1 minus the Anchor2 return score.
 
 ## Dependencies
 
