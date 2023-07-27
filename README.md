@@ -1,8 +1,8 @@
 # EpicTope
 
-Simplified code for identifying ideal epitope tag insertion sites for proteins.
+Software for predicting epitope tag insertion sites in proteins.
 
-`Epictope` is a simple R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and solvent accessabilty to predict suitable internal locations for tag insertion.
+`EpiTtope` is a simple R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and solvent accessabilty to predict suitable internal locations for tag insertion.
 
 This repository contains the code source of the R epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package depends on local installations of BLAST, muscle, and DSSP to run. 
 
