@@ -43,12 +43,15 @@ Secondary structure, or refers to the local spatial conformation of the polypept
 
 Disordered binding regions are parts of the proteins that do not have a well-defined structure on their own, but can undergo a disorder-to-order transition when they bind to specific protein partners. To avoid these regions, we use ANCHOR2, a tool that analyzes an amino acid sequence and returns a score of intrinsic disorder depending on a model of the estimated energy potential for residue interactions. To maintain consistency with other features, the disordered binding feature score is taken as 1 minus the Anchor2 return score.
 
+## Requirements
+
+Installing `epictope` and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to  installations of BLAST, muscle, and dssp, either locally or on an HPC environment. For users familiar with R, `epictope` can be run interactively through an R session or with an IDE such as RStudio. 
+
 ## Dependencies
 
-To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment.
+To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. 
 
- For macOS/Linux, commands are issued at the terminal. For Windows, it is recommended to use conda through the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
-
+For macOS/Linux, commands are issued at the terminal. For Windows, it is recommended to use conda through the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
 
 Dependencies can be installed using the provided `epictope_environment.yml` using the following commands.
 ```
