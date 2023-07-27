@@ -26,7 +26,7 @@ Sequence conservation is used to guide internal epitope-tagging approaches. Regi
 
 ### Solvent accessibility
 
-Solvent accessibility, or Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the Alphafold2 predicted structure as the source PDB for DSSP calculations.
+ Relative Solvent Accessibility (RSA) is a measure of the surface area of a folded protein that is accessible to a solvent, typically the cytoplasmic fluid. It is calculated by dividing the solvent accessible surface area (SASA) of an amino acid by the maximum possible solvent accessible surface area for that residue. SASA values are assigned with Define Secondary Structure of Proteins (DSSP). The DSSP program defines secondary structure, geometrical features and solvent exposure of proteins, given atomic coordinates in Protein Data Bank (PDB) format. Values used for the maximum possible solvent accessible surface area were taken from [this study](https://doi.org/10.1371/journal.pone.0080635). We use the [Alphafold2 predicted structure from the European Bioinforamtics Institute (EBI)](https://alphafold.ebi.ac.uk/) as the source PDB for DSSP calculations.
 
 
 <figure style="display: inline-block; text-align: center;">
@@ -37,13 +37,14 @@ Solvent accessibility, or Relative Solvent Accessibility (RSA) is a measure of t
 
 ### Secondary structure
 
-Secondary structure, or refers to the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), resisues in isolated Beta bridhes (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
+Secondary structure, refers to the local spatial conformation of the polypeptide backbone for the protein of interest. Certain structures, such as alpha helices or beta sheets, are more defined and disruption of these structure is likely to affect protein structure. As with solvent accessibility, we use DSSP to define the secondary structure of the protein from its PDB file. By default, we assign helices (GHI) and sheets (E) feature scores of 0. Hydrogen bonded turns (T), residues in isolated Beta bridges (B), and bends (S) scores of 0.5, and coils scores of 1. For all features, higher values indicate greater suitability for tag insertion. 
 
 ### Disordered binding 
 
 Disordered binding regions are parts of the proteins that do not have a well-defined structure on their own, but can undergo a disorder-to-order transition when they bind to specific protein partners. To avoid these regions, we use ANCHOR2, a tool that analyzes an amino acid sequence and returns a score of intrinsic disorder depending on a model of the estimated energy potential for residue interactions. To maintain consistency with other features, the disordered binding feature score is taken as 1 minus the Anchor2 return score.
 
-## Dependencies
+## Installation
+### Dependencies
 
 To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment.
 
@@ -109,7 +110,7 @@ Method 2
 C:\ProgramData\Anaconda3\Scripts\Activate
 environment_install.bat
 ```
-## Installation
+### Installing EpicTope 
 
 Epictope is distributed as a R package. You can install it from this github repository using the *install_github* function from eiher the `remotes` or `devtools` R packages. This function is equivalent to the *install.packages()* function in base R, and should be entered in R through an interactive session or an IDE like RStudio.
 
