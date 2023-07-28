@@ -60,7 +60,7 @@ To calculate the multiple sequence alignment and secondary characteristics, Epic
 
 #### macOS/Linux installation
 
-For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the provided `epictope_environment.yml` using the following commands. Download or copy-paste the contents of the epictope_environment.yml file [here](https://raw.githubusercontent.com/henrichung/epitope_tag/main/epictope_environment.yml). Place this file in your working directory or project folder and use one of the follow methods to install. 
+For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the provided [epictope_environment_linux.yml](https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/epictope_environment_linux.yml) using the following commands. Download or copy-paste the contents of the epictope_environment_linux.yml file and place the file in your working directory or project folder. Then use one of the following methods to install. 
 
 
 macOS/Linux method 1
@@ -85,7 +85,7 @@ conda install -c salilab dssp
 conda install -c conda-forge r-base r-stringi r-openssl
 ```
 
-We also provide a simple wrapper scripts `environment_install.sh` for macOS/Linux to automate running of multiple commands. To run, download the script [here](https://raw.githubusercontent.com/henrichung/epitope_tag/main/environment_install.sh)
+We also provide a simple wrapper scripts `environment_install.sh` for macOS/Linux to automate running of multiple commands. To run, download the script [here](https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/environment_install.sh)
 
 macOS/Linux method 4
 ```
@@ -96,14 +96,16 @@ chmod +x environment_install.sh
 
 #### Windows installation
 
-Detailed instructions for conda installation Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html). Once installed, run the follow commands to install the R and DSSP dependencies. 
+Detailed instructions for conda installation Windows can be found at this [link](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html).  Once installed, run the following commands to install the R and DSSP dependencies. Dependencies can be installed using the provided [epictope_environment_windows.yml](https://github.com/henrichung/epitope_tag/blob/main/install/windows/epictope_environment_windows.yml). Download or copy-paste the contents of the epictope_environment_windows.yml file and place the file in your working directory or project folder. Then use one of the subsequent methods to install. 
 
-BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found [here](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) for BLAST and [here](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to above, we provide simple wrapper scripts to install both. Wrapper scripts for [BLAST]() and [MUSCLE]()
+BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to above, we provide simple wrapper scripts to install both. We provide wrapper scripts for blast [installation](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_blast.bat) and muscle [installation](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_muscle.bat) separately.
 
 Windows method 1
 ```
 conda env create --file=epictope_environment_windows.yml
 conda activate epictope
+./install_blast.bat
+./install_muscle.bat
 ```
 
 Windows method 2
@@ -111,6 +113,8 @@ Windows method 2
 conda create epictope
 conda create -n epictope
 conda env update --file epictope_environment_windows.yml
+./install_blast.bat
+./install_muscle.bat
 ```
 
 Windows method 3
@@ -120,34 +124,18 @@ conda activate epictope
 conda install -c bioconda blast muscle
 conda install -c speleo3 dssp
 conda install -c conda-forge r-base r-stringi r-openssl
+./install_blast.bat
+./install_muscle.bat
 ```
 
-macOS/Linux method 4
+Windows method 4
 ```
 # for Windows
-C:\ProgramData\Anaconda3\Scripts\Activate
-environment_install.bat
-```
- For Windows, it is use the Anaconda Prompt. Detailed instructions for Windows can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
-
-#### Example dependency installations on Windows
-
-Method 1
-```
-C:\ProgramData\Anaconda3\Scripts\Activate  
-conda env create --file=Epictope_environment.yml
-conda activate Epictope
-```
-
-Method 2
-```
 C:\ProgramData\Anaconda3\Scripts\Activate
 ./environment_install.bat
 ./install_blast.bat
 ./install_muscle.bat
 ```
-
-Method 3
 
 ### Installing Epictope 
 
