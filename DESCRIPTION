@@ -15,7 +15,7 @@ Depends:
 Imports:
     rvest (>= 1.0.3),
     httr (>= 1.4.5),
-    Biostrings (>= 2.66.0),
+    Biostrings (>= 2.62.0),
     jsonlite (>= 1.8.7),
     methods (>= 1.0.0),
     stats (>= 1.0.0),

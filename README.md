@@ -104,8 +104,8 @@ Windows method 1
 ```
 conda env create --file=epictope_environment_windows.yml
 conda activate epictope
-./install_blast.bat
-./install_muscle.bat
+install_blast.bat
+install_muscle.bat
 ```
 
 Windows method 2
@@ -113,8 +113,8 @@ Windows method 2
 conda create epictope
 conda create -n epictope
 conda env update --file epictope_environment_windows.yml
-./install_blast.bat
-./install_muscle.bat
+install_blast.bat
+install_muscle.bat
 ```
 
 Windows method 3
@@ -124,17 +124,17 @@ conda activate epictope
 conda install -c bioconda blast muscle
 conda install -c speleo3 dssp
 conda install -c conda-forge r-base r-stringi r-openssl
-./install_blast.bat
-./install_muscle.bat
+install_blast.bat
+install_muscle.bat
 ```
 
 Windows method 4
 ```
 # for Windows
 C:\ProgramData\Anaconda3\Scripts\Activate
-./environment_install.bat
-./install_blast.bat
-./install_muscle.bat
+environment_install.bat
+install_blast.bat
+install_muscle.bat
 ```
 
 ### Installing Epictope 

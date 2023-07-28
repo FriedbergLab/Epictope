@@ -1,11 +1,10 @@
 @echo off
 echo Downloading MUSCLE...
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/rcedgar/muscle/releases/download/5.1.0/muscle5.1.win64.exe', 'muscle5.1.win64.exe')"
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/rcedgar/muscle/releases/download/5.1.0/muscle5.1.win64.exe', '%cd%\muscle5.1.win64.exe')"
 echo Creating bin directory...
-cd %USERPROFILE%
 mkdir bin
 echo Copying MUSCLE to bin directory...
-copy muscle3.8.31_i86win32.exe bin\muscle.exe
+copy muscle5.1.win64.exe .\bin\muscle.exe
 echo Testing MUSCLE installation...
-bin\muscle
+bin\muscle.exe"
 pause
