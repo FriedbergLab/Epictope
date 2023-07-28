@@ -8,3 +8,4 @@ copy muscle5.1.win64.exe .\bin\muscle.exe
 echo Testing MUSCLE installation...
 bin\muscle.exe"
 pause
+###
