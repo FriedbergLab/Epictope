@@ -1,6 +1,6 @@
 @echo off
 echo Downloading MUSCLE...
-powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.drive5.com/muscle/muscle3.8.31_i86win32.exe', 'muscle3.8.31_i86win32.exe')"
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/rcedgar/muscle/releases/download/5.1.0/muscle5.1.win64.exe', 'muscle5.1.win64.exe')"
 echo Creating bin directory...
 cd %USERPROFILE%
 mkdir bin
