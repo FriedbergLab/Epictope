@@ -11,3 +11,5 @@ dependencies:
   - r-base>=4.2.2
   - r-stringi>=1.1.7
   - r-openssl>=2.0.6
+  - git
+  - gzip
