@@ -4,7 +4,7 @@
 \alias{check_config}
 \title{check_config}
 \usage{
-check_config(config_file = "")
+check_config()
 }
 \arguments{
 \item{config_file}{A character string specifying the path to the configuration file.}

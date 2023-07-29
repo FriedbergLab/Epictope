@@ -11,8 +11,13 @@ make_protein_db(gz_file)
 }
 \description{
 Decompresses the input gzipped file and creates a protein BLASTable database using makeblastdb.
+
+Decompresses the input gzipped file and creates a protein BLASTable database using makeblastdb.
 }
 \examples{
+# Create a protein BLASTable database from the compressed FASTA file
+#make_protein_db("Bos_taurus.ARS-UCD1.2.pep.all.fa.gz")
+
 # Create a protein BLASTable database from the compressed FASTA file
 #make_protein_db("Bos_taurus.ARS-UCD1.2.pep.all.fa.gz")
 
