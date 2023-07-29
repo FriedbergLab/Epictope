@@ -1,4 +1,4 @@
-# FOR MACOS/LINUX
+# FOR WINDOWS
 name: epictope
 channels:
   - bioconda
