@@ -12,7 +12,7 @@
 
 make_protein_db <- function(gz_file) {
   # Decompress the input file
-  gunzip(gz_file, remove = FALSE)
+  R.utils::gunzip(gz_file, remove = FALSE)
 
   # Remove the ".gz" extension from the file name
   file <- gsub(".gz", "", gz_file)

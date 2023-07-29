@@ -19,7 +19,8 @@ Imports:
     jsonlite (>= 1.8.4),
     methods (>= 1.0.0),
     stats (>= 1.0.0),
-    utils (>= 1.0.0)
+    utils (>= 1.0.0),
+    R.utils (>= 1.0.0)
 Suggests:
     knitr
 VignetteBuilder:
