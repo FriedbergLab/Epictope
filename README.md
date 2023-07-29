@@ -100,13 +100,15 @@ Detailed instructions for conda installation Windows can be found at this [link]
 
 BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to above, we provide simple wrapper scripts to install both. We provide wrapper scripts for blast [installation](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_blast.bat) and muscle [installation](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_muscle.bat) separately.
 
-Windows method 1
+Run the following commands in the Anaconda Prompt.
 ```
 conda env create --file=epictope_environment_windows.yml
 conda activate epictope
 install_blast.bat
 install_muscle.bat
 ```
+
+Detailed Installation Instructions for Windows can be found [here](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
 
 Windows method 2
 ```
