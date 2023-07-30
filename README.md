@@ -120,8 +120,21 @@ Example workflows with the Epictope package are available in the **vignettes** f
 Alternatively, the scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-command operation.
 To run, download the `install.R` and `single_score.R` scripts from this repository either directly from the github page or using git clone.
 
-- [install.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/install.R) - This script downloads the proteomes for the species used in the multiple sequence alignment. It then converts these sequences in useable files for BLAST. The script checks for and, if not existent, creates data folders in the current working directory to store these files. These file needs to be re-run if the user changes the species considered in the multiple sequence alignment. 
-- [single_score.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/single_score.R) - This script takes a UniprotID as input and performs the Epictope workflow for that protein. It retrieves the amino acid sequence and Alphafold2 predicted structure for the protein. It then BLASTs the protein against the proteomes of the animals used in the multiple sequence alignment, retrieves the highest scoring match (score measued by lowest E-value), and aligns the matched proteins along with the query in a multiple sequence alignment. It separately determines the secondary structure, solvent accessibility, and disordered binding regions for the protein, and finally combines all feature scores into a dataframe. The dataframe annotates each residue position with its feature scores and final tagging score. This file is saved to an /outputs folder with the name of the protein followed by '_score.csv'. For example, the protein used in the example below save a "outputs/P57102_score.csv" file.
+- [install.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/install.R) -
+  - This script first downloads the proteomes for the species used in the multiple sequence alignment from the NCBI FTP page.
+  - It then converts these sequences into usable files for BLAST.
+  - This file need to be re-run if the user changes the species considered in the multiple sequence alignment.
+
+- [single_score.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/single_score.R) -
+  - This script takes a UniprotID as input and performs the Epictope workflow for that protein.
+  - It first retrieves the amino acid sequence and Alphafold2 predicted structure for the protein.
+  - It then BLASTs the protein against the proteomes of the animals used in the multiple sequence alignment, retrieves the highest scoring match (score measured by the lowest E-value), and aligns the matched proteins along with the query in a multiple sequence alignment.
+  - It then determines the secondary structure, solvent accessibility, and disordered binding regions for the protein.
+  - It combines all feature scores into a dataframe.
+  - The dataframe annotates each residue position with its feature scores and final tagging score.
+  - This file is saved to an /outputs folder with the name of the protein followed by '_score.csv'.
+  - For example, the protein used in the examples saves a "outputs/P57102_score.csv" file.
+
 
 From the terminal, these scripts can be run as follows.
 ```
@@ -133,12 +146,62 @@ Each script can also be opened in an IDE such as Rstudio, and run interactively 
 
 #### User configuration
 
-The scoring function used by Epictope sums the calculated scores for each feature, assigning equal weight to thesecondary structure, disordered binding regions, and solvent accessabilty. Sequence conservation is weighted slightly higher, at 1.5 times the other features. The weight for each feature can be adjusted by the user using a "config.R" file. This file (shorthand for configuration) is used to adjust some of the tuneable parameters in Epictope. The configuration file allows the user to define the species used in the multiple sequence alignment, the values used to score the tag suitability of secondary structures, and the maximum solvent accessibility values to determine solvent accessibility. By default, Epictope will look for a config.R file in the working directory. If a file is not found, it will use default values. The example config.R value in scripts is populated with the default values used by Epictope.
+The scoring function used by Epictope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
+
+Users can adjust the weight of each feature by modifying a "config.R" file. This file allows fine-tuning of parameters in Epictope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
+
+Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config.R" value is provided.
+### Examples
 
 
-### Example run
+Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine.
 
-ADD AN EXAMPLE HERE
+#### Example 1A: Dependency Installation on Windows
+
+Examples for Windows can be run through the Anaconda Prompt, which is available through the Anaconda installation for Windows. If not already installed, please see the installation [instructions](#installation)
+
+1. Download and place the contents of the "install/windows" folder into your project directory. In Anaconda prompt, type "dir" to verify the files are in the correct folder.
+```bash
+dir
+```
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/windows_files.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
+</figure>
+
+2. Run the installation scripts with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
+```
+environmental_install.bat
+install_muscle.bat
+install_blast.bat
+```
+
+Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
+
+#### Example 1B: Dependency installation on macOS/linux
+
+#### Example 2: Generating epictope predictions 
+
+For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
+
+```
+conda activate epictope
+git clone https://github.com/henrichung/epitope_tag 
+R -e "remotes::install_github('henrichung/epitope_tag')"
+Rscript epitope_tag\scripts\install.R
+Rscript epitope_tag\scripts\single_score.R Q9W7E7
+```
+
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/epictope_install.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
+  <figcaption>Downloading the proteomes for animals used in the multiple sequence alignment. Files will only be downloaded once.</figcaption>.
+</figure>
+
+#### Example 3: Generating Epictope predictions with custom settings
+
+In this example, we will 
+
+
+
 ### License 
 
 Epictope is distributed open-source under the GPL3 license.

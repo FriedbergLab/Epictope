@@ -1,5 +1,6 @@
 #!/bin/bash
 conda config --set always_yes yes
+conda create -n epictope
 conda activate epictope
 conda install -c bioconda blast muscle
 conda install -c salilab dssp

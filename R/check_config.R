@@ -10,6 +10,7 @@
 check_config <- function() {
   files <- list.files(pattern = "^config.R$", recursive = TRUE, full.names = TRUE)
   if (length(files) > 0) {
+    message("Found custom configuration file.")
     source(files[1])
   } else {
     # define species to run MSA against

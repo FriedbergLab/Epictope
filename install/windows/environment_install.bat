@@ -1,8 +1,28 @@
 @echo off
-conda config --set always_yes yes
-conda activate epictope
-conda install -c bioconda blast muscle
-conda install -c speleo3 dssp
-conda install -c conda-forge r-base r-stringi r-openssl
-conda install -c conda-forge r-base r-stringi r-openssl gzip git
-conda config --set always_yes no
+
+:: check if conda is installed
+where conda >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Conda is not installed on your system.
+    echo Please install it first.
+    exit /b
+)
+
+:: create the 'epictope' environment if it doesn't exist
+call conda info --envs | findstr /r "^epictope " >nul
+if %errorlevel% neq 0 (
+    call conda create --name epictope --yes
+)
+
+:: activate the 'Epictope' environment
+call conda activate epictope
+
+:: install dependencies
+call conda install -c bioconda blast muscle
+call conda install -c speleo3 dssp
+call conda install -c conda-forge r-base r-stringi r-openssl git
+
+:: report success
+echo.
+echo Epictope environment installation complete.
+exit /b

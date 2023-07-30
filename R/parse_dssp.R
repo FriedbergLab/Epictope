@@ -12,7 +12,7 @@
 #' @export
 
 # https://rdrr.io/github/jcaledo/ptm_0.1.1/src/R/dssp.R
-parse_dssp <- function(file, keepfiles = FALSE) {
+parse_dssp <- function(file, keepfiles = TRUE) {
   con <- file(file, 'r')
 
   counter <- 0
@@ -33,9 +33,9 @@ parse_dssp <- function(file, keepfiles = FALSE) {
       l <- strsplit(line, split = "")[[1]]
       l <- paste(l, collapse = "")
       if ("have bz2" %in% l) {
-        first_valid_line <- 29  # DSSP file coming from the API
+        first_valid_line <- 28  # DSSP file coming from the API
       } else {
-        first_valid_line <- 28  # DSSP file coming from the sync
+        first_valid_line <- 27  # DSSP file coming from the sync
       }
     }
 
