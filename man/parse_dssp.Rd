@@ -4,7 +4,7 @@
 \alias{parse_dssp}
 \title{parse_dssp}
 \usage{
-parse_dssp(file, keepfiles = FALSE)
+parse_dssp(file, keepfiles = TRUE)
 }
 \arguments{
 \item{file}{A character vector specifying the path to the input DSSP file.}
