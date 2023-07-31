@@ -6,5 +6,5 @@ mkdir bin
 echo Renaming MUSCLE executable...
 move muscle5.1.win64.exe muscle.exe
 echo Testing MUSCLE installation...
-bin\muscle.exe"
+muscle.exe -h
 pause

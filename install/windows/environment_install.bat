@@ -20,7 +20,7 @@ call conda activate epictope
 :: install dependencies
 call conda install -c bioconda blast muscle
 call conda install -c speleo3 dssp
-call conda install -c conda-forge r-base r-stringi r-openssl git
+call conda install -c conda-forge r-base r-stringi r-openssl r-remotes git
 
 :: report success
 echo.
