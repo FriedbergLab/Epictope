@@ -12,6 +12,7 @@ This repository contains the code source of the R Epictope package, step-by-step
 - [Methodology](#methodology)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Examples](#examples)
 
 ## Methodology
 
@@ -56,7 +57,7 @@ To calculate the multiple sequence alignment and secondary characteristics, Epic
 Installing Epictope and its dependencies will require at least 3GB of disk space. Users should also be familar with using conda. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can also be run interactively through an R session or with an IDE such as RStudio. 
 
 
-#### macOS/Linux installation
+### macOS/Linux installation
 
 For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the following commands using the included terminal. 
 
@@ -79,7 +80,7 @@ git clone https://github.com/henrichung/epitope_tag
 Additional installation methods for Linux can be found in the Detailed Installation for Linux [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
 
 
-#### Windows installation
+### Windows installation
 Epictope relies on local installation of BLAST, MUSCLE, and dssp to be installed. We recommended dependencies be installed with [Anaconda](https://www.anaconda.com/), a distribution of the Python and R programming languages for scientific computing. 
 
 BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to previous steps, we provide simple wrapper scripts to install both.
@@ -106,10 +107,10 @@ Additional installation methods for Windows can be found in the Detailed Install
 
 ## Usage
 
-#### Workflow notebooks
+### Workflow notebooks
 Example workflows with the Epictope package are available in the **vignettes** folder. Workflows are available as both [R Markdown Documents](https://rmarkdown.rstudio.com/) and [Jupyter](https://jupyter.org/) notebooks. These workflows go through the Epictope workflow step by step in an interactive session or an IDE. 
 
-#### Macro scripts
+### Macro scripts
 Alternatively, the scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-command operation.
 To run, download the `install.R` and `single_score.R` scripts from this repository either directly from the github page or using git clone.
 
@@ -137,7 +138,7 @@ Rscript single_score.R "P57102" # replace 'P57102' with the UniprotID for your p
 
 Each script can also be opened in an IDE such as Rstudio, and run interactively line by line.
 
-#### User configuration
+### User configuration
 
 A second scoring function used by Epictope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
 
@@ -145,11 +146,11 @@ Users can adjust the weight of each feature by modifying the "config_defaults.R"
 
 Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config_defaults.R" value is provided. To use, edit and rename the file to "config.R" and place it anywhere in your project directory. 
 
-### Examples
+## Examples
 
 Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine. These examples assume the installation steps for macOS/Linux have been followed, and this github repo has been downloaded to the project directory.
 
-#### Example 1A: Generating epictope predictions on macOS/Linux
+### Example 1A: Generating epictope predictions on macOS/Linux
 
 For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
 
@@ -165,7 +166,7 @@ Rscript epitope_tag/scripts/single_score.R outputs/Q9W7E7_score.csv
   <figcaption>Minimum score plot for Q9W7E7. Values smoothed over a windows size of 7.</figcaption>
 </figure>
 
-#### Example 1B: Generating epictope predictions on Windows
+### Example 1B: Generating epictope predictions on Windows
 
 On windows, the commands are the same as for Linux, except Windows uses a backwards slash "\\" instead of a forward slash "/".
 
@@ -176,6 +177,6 @@ Rscript epitope_tag\scripts\single_score.R outputs\Q9W7E7_score.csv
 ```
  
 
-### License 
+## License 
 
 Epictope is distributed open-source under the GPL3 license.
