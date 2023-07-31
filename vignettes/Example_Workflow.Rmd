@@ -23,12 +23,9 @@ To calculate the multiple sequence alignment and secondary characteristics, `epi
 ```{r, eval = FALSE}
 conda create -n epictope
 conda activate epictope
-conda install -c bioconda blast
-conda install -c bioconda muscle
+conda install -c bioconda blast muscle
 conda install -c salilab dssp
-conda install -c conda-forge r-base
-conda install -c r r-stringi
-conda install -c r r-openssl
+conda install -c conda-forge r-base r-stringi r-openssl gzip git
 ```
 
 ### Installation
@@ -36,8 +33,8 @@ conda install -c r r-openssl
 The `epictope` package can be installed from github using the `remotes` or `devtools` package.
 
 ```{r, eval = FALSE}
-install.packages("devtools")
-devtools::install_github("henrichung/epitope_tag")
+install.packages("remotes")
+remotes::install_github("henrichung/epitope_tag")
 ```
 
 #### Verify installation
@@ -162,8 +159,8 @@ To perform the multiple sequence alignment (MSA). We must identify homologous pr
 seq <- Biostrings::AAStringSet(uniprot_data$Sequence, start=NA, end=NA, width=NA, use.names=TRUE) # Use the sequence identified by the UniprotID
 
 # list of proteome files to blast against
-aa_files <-  list.files(cds_folder, pattern = "\\.all.fa$", full.names = TRUE, recursive = TRUE) # list the protein files in the CDS folder
-names(aa_files) <- aa_files # name them to keep track of which animal each result came from
+aa_files <-  list.files(cds_folder, pattern = paste0(species, ".*\\.all.fa$", collapse = "|"), ignore.case = TRUE, full.names = TRUE, recursive = TRUE)
+names(aa_files) <- aa_files
 
 # blast
 blast_results <- lapply(aa_files, function(.x){protein_blast(seq, .x)})
