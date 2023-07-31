@@ -27,10 +27,9 @@ ftp_download <- function(link, seq_type = "pep") {
   tryCatch(
     {
       utils::download.file(
-        url = paste0(link_url, filename),
-        destfile = paste0(cds_folder, "/", filename),  # Set destination folder (change if needed)
-        method = "curl",
-        extra = "-nc"
+          url = paste0(link_url, filename),
+          destfile = paste0(cds_folder, "/", filename),  # Set destination folder (change if needed)
+          method = "curl"
       )
     },
     # If the download fails, search for the file in the specified directory and return if found
