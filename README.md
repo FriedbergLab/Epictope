@@ -156,7 +156,30 @@ Epictope searches for a "config.R" file in the working directory. If it doesn't 
 
 Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine.
 
-#### Example 1A: Installation on Windows
+#### Example 1A: Installation on macOS/linux
+
+Examples for MaxOS/Linux can be run through terminal 
+
+1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
+
+```bash
+ls
+```
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/linux_files.png" alt="Alt text" title="Example Linux project directory." width="50%">
+</figure>
+
+```
+chmod +x environmental_install.sh
+environmental_install.sh
+conda activate epictope
+git clone https://github.com/henrichung/epitope_tag 
+R -e "remotes::install_github('henrichung/epitope_tag')"
+```
+
+Additional installation methods for Linux can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
+
+#### Example 1B: Installation on Windows
 
 Examples for Windows can be run through the Anaconda Prompt, which is available through the Anaconda installation for Windows. If not already installed, please see the installation [instructions](#installation)
 
@@ -180,38 +203,15 @@ R -e "remotes::install_github('henrichung/epitope_tag')"
 
 Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
 
-#### Example 1B: Installation on macOS/linux
-
-Examples for MaxOS/Linux can be run through terminal 
-
-1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
-
-```bash
-ls
-```
-<figure style="display: inline-block; text-align: center;">
-  <img src="images/linux_files.png" alt="Alt text" title="Example Linux project directory." width="50%">
-</figure>
-
-```
-chmod +x environmental_install.sh
-environmental_install.sh
-conda activate epictope
-git clone https://github.com/henrichung/epitope_tag 
-R -e "remotes::install_github('henrichung/epitope_tag')"
-```
-
-Additional installation methods for Linux can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
-
-#### Example 2: Generating epictope predictions 
+#### Example 2A: Generating epictope predictions on macOS/Linux
 
 For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
 
 Run the Epictope workflow with the following commands.
 ```
-Rscript epitope_tag\scripts\install.R
-Rscript epitope_tag\scripts\single_score.R Q9W7E7
-Rscript epitope_tag\scripts\single_score.R outputs\Q9W7E7_score.csv
+Rscript epitope_tag/scripts/install.R
+Rscript epitope_tag/scripts/single_score.R Q9W7E7
+Rscript epitope_tag/scripts/single_score.R outputs\Q9W7E7_score.csv
 ```
 
 <figure style="display: inline-block; text-align: center;">
@@ -219,25 +219,9 @@ Rscript epitope_tag\scripts\single_score.R outputs\Q9W7E7_score.csv
   <figcaption>Downloading the proteomes for animals used in the multiple sequence alignment. Files will only be downloaded once.</figcaption>
 </figure>
 
-#### Example 3: Generating Epictope predictions with custom settings
+#### Example 2B: Generating epictope predictions on Windows
 
-In this example, we will edit the "config_defaults.R" file to adjust how Epictope considers each score. Using a text editor, we will edit the "config_defaults.R" file. For this example, we will decrease the feature weight for shannon entropy to be equal to the other features. We will also replace "Canis lupus familaris" in the MSA with "Felis catus".
-
-Save the edited "config_defaults.R" file as "config.R" and place it in your working directory. The revised lines should look like the following.
-
-```R
-# define species to run MSA against
-species <- c("bos_taurus", "felis_catus", "gallus_gallus", "homo_sapiens", "mus_musculus", "takifugu_rubripes", "xenopus_tropicalis")
-assign("species", species, envir = .GlobalEnv)
-
-# weights for tagging features
-h_weight = 1 # shannon entropy
-rsa_weight = 1 # solvent accessible surface area
-ss_weight = 1 # secondary structure
-br_weight = 1 # disordered binding region
-```
-
-Run the Epictope workflow with the following commands.
+On windows, the commands are the same as for Linux, except Windows uses a backwards slash "/" instead of a forward slash "\".
 
 ```
 Rscript epitope_tag\scripts\install.R
