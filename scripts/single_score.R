@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 # load required packages
 library(epictope)
 rm(list = ls())

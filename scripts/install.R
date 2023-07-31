@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(epictope)
 rm(list = ls())
 # load config and set up file structure.

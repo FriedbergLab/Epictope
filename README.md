@@ -198,7 +198,7 @@ Rscript epitope_tag\scripts\single_score.R Q9W7E7
 
 #### Example 3: Generating Epictope predictions with custom settings
 
-In this example, we will 
+In this example, we will edit the "config.R" file 
 
 
 
