@@ -74,7 +74,6 @@ environment_install.sh
 conda activate epictope
 git clone https://github.com/henrichung/epitope_tag 
 R -e "remotes::install_github('henrichung/epitope_tag')"
-git clone https://github.com/henrichung/epitope_tag
 ```
 
 Additional installation methods for Linux can be found in the Detailed Installation for Linux [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
@@ -100,7 +99,6 @@ install_blast.bat
 conda activate epictope
 git clone https://github.com/henrichung/epitope_tag 
 R -e "remotes::install_github('henrichung/epitope_tag')"
-git clone https://github.com/henrichung/epitope_tag
 ```
 
 Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
