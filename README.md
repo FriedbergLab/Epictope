@@ -2,7 +2,7 @@
 
 Software for predicting epitope tag insertion sites in proteins.
 
-Epictope is an R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion.
+Epictope is an R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion. The primary score for Epictope relies on a "least-worst" approach, where insertion site suitability is identified by  positions where the lowest scoring feature is the highest. For a given position, we sort the feature scores from lowest to highest, and take the lowest score. We then plot the lowest score for each position, and determine positions where this lowest score is highest to be suitable positions for tagging. 
 
 This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can be installed as a package with Epictope). You will need at least 3GB of disk space.
 
@@ -60,14 +60,24 @@ To calculate the multiple sequence alignment and secondary characteristics, Epic
 
 #### macOS/Linux installation
 
-For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the provided [epictope_environment_linux.yml](https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/epictope_environment_linux.yml) using the following commands. Download the epictope_environment_linux.yml file and place the file in your working directory or project folder. Then use commands to install. 
+For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the provided [epictope_environment_linux.yml](https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/epictope_environment_linux.yml) using the following commands. 
 
+1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
+
+```bash
+ls
 ```
-conda env create --file=epictope_environment_linux.yml
+
+2. Run the installation scripts with the following commands. 
+```
+chmod +x environmental_install.sh
+environmental_install.sh
 conda activate epictope
+git clone https://github.com/henrichung/epitope_tag 
+R -e "remotes::install_github('henrichung/epitope_tag')"
 ```
 
-Additional methods and detailed instructions for linux can be found [here](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
+Additional installation methods for Linux can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
 
 
 #### Windows installation
@@ -76,15 +86,23 @@ Detailed instructions for conda installation Windows can be found at this [link]
 
 BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to previous steps, we provide simple wrapper scripts to install both. We provide wrapper scripts for [blast](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_blast.bat) and [muscle](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_muscle.bat) separately.
 
-Run the following commands in the Anaconda Prompt.
-```
-conda env create --file=epictope_environment_windows.yml
-conda activate epictope
-install_blast.bat
-install_muscle.bat
+1. Download and place the contents of the "install/windows" folder into your project directory. In Anaconda prompt, type "dir" to verify the files are in the correct folder.
+```bash
+dir
 ```
 
-Detailed Installation Instructions for Windows can be found [here](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
+2. Run the installation scripts with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
+```
+environmental_install.bat
+install_muscle.bat
+install_blast.bat
+conda activate epictope
+git clone https://github.com/henrichung/epitope_tag 
+R -e "remotes::install_github('henrichung/epitope_tag')"
+```
+
+Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
+
 
 ### Installing Epictope 
 
@@ -130,7 +148,7 @@ To run, download the `install.R` and `single_score.R` scripts from this reposito
   - It first retrieves the amino acid sequence and Alphafold2 predicted structure for the protein.
   - It then BLASTs the protein against the proteomes of the animals used in the multiple sequence alignment, retrieves the highest scoring match (score measured by the lowest E-value), and aligns the matched proteins along with the query in a multiple sequence alignment.
   - It then determines the secondary structure, solvent accessibility, and disordered binding regions for the protein.
-  - It combines all feature scores into a dataframe.
+  - It combines all feature scores into a summary dataframe.
   - The dataframe annotates each residue position with its feature scores and final tagging score.
   - This file is saved to an /outputs folder with the name of the protein followed by '_score.csv'.
   - For example, the protein used in the examples saves a "outputs/P57102_score.csv" file.
@@ -146,7 +164,7 @@ Each script can also be opened in an IDE such as Rstudio, and run interactively 
 
 #### User configuration
 
-The scoring function used by Epictope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
+A second scoring function used by Epictope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
 
 Users can adjust the weight of each feature by modifying the "config_defaults.R" file. This file allows fine-tuning of parameters in Epictope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
 
@@ -156,49 +174,7 @@ Epictope searches for a "config.R" file in the working directory. If it doesn't 
 
 Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine.
 
-#### Example 1A: Installation on macOS/linux
-
-Examples for MaxOS/Linux can be run through terminal 
-
-1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
-
-```bash
-ls
-```
-2. Run the installation scripts with the following commands. 
-
-```
-chmod +x environmental_install.sh
-environmental_install.sh
-conda activate epictope
-git clone https://github.com/henrichung/epitope_tag 
-R -e "remotes::install_github('henrichung/epitope_tag')"
-```
-
-Additional installation methods for Linux can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
-
-#### Example 1B: Installation on Windows
-
-Examples for Windows can be run through the Anaconda Prompt, which is available through the Anaconda installation for Windows. If not already installed, please see the installation [instructions](#installation)
-
-1. Download and place the contents of the "install/windows" folder into your project directory. In Anaconda prompt, type "dir" to verify the files are in the correct folder.
-```bash
-dir
-```
-
-2. Run the installation scripts with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
-```
-environmental_install.bat
-install_muscle.bat
-install_blast.bat
-conda activate epictope
-git clone https://github.com/henrichung/epitope_tag 
-R -e "remotes::install_github('henrichung/epitope_tag')"
-```
-
-Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
-
-#### Example 2A: Generating epictope predictions on macOS/Linux
+#### Example 1A: Generating epictope predictions on macOS/Linux
 
 For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
 
@@ -206,24 +182,24 @@ Run the Epictope workflow with the following commands.
 ```
 Rscript epitope_tag/scripts/install.R
 Rscript epitope_tag/scripts/single_score.R Q9W7E7
-Rscript epitope_tag/scripts/single_score.R outputs\Q9W7E7_score.csv
+Rscript epitope_tag/scripts/single_score.R outputs/Q9W7E7_score.csv
 ```
 
 <figure style="display: inline-block; text-align: center;">
   <img src="images/Q9W7E7_score.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
-  <figcaption>Downloading the proteomes for animals used in the multiple sequence alignment. Files will only be downloaded once.</figcaption>
+  <figcaption>Minimum score plot for Q9W7E7. Values smoothed over a windows size of 7.</figcaption>
 </figure>
 
-#### Example 2B: Generating epictope predictions on Windows
+#### Example 1B: Generating epictope predictions on Windows
 
-On windows, the commands are the same as for Linux, except Windows uses a backwards slash "/" instead of a forward slash "\".
+On windows, the commands are the same as for Linux, except Windows uses a backwards slash "/" instead of a forward slash "\\".
 
 ```
 Rscript epitope_tag\scripts\install.R
 Rscript epitope_tag\scripts\single_score.R Q9W7E7
 Rscript epitope_tag\scripts\single_score.R outputs\Q9W7E7_score.csv
 ```
-
+ 
 
 ### License 
 
