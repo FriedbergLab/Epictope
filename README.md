@@ -2,7 +2,7 @@
 
 Software for predicting epitope tag insertion sites in proteins.
 
-Epictope is an R pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion.
+Epictope is an R package/pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion.
 
 The primary score for Epictope relies on a "least-worst" approach, where insertion site suitability is identified by  positions where the lowest scoring feature is the highest. For a given position, we sort the feature scores from lowest to highest, and take the lowest score. We then plot the lowest score for each position, and determine positions where this lowest score is highest to be suitable positions for tagging. 
 
@@ -10,7 +10,6 @@ This repository contains the code source of the R Epictope package, step-by-step
 
 ## Table of Contents
 - [Methodology](#methodology)
-- [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Usage](#usage)
 
@@ -74,6 +73,7 @@ environment_install.sh
 conda activate epictope
 git clone https://github.com/henrichung/epitope_tag 
 R -e "remotes::install_github('henrichung/epitope_tag')"
+git clone https://github.com/henrichung/epitope_tag
 ```
 
 Additional installation methods for Linux can be found in the Detailed Installation for Linux [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
@@ -99,35 +99,10 @@ install_blast.bat
 conda activate epictope
 git clone https://github.com/henrichung/epitope_tag 
 R -e "remotes::install_github('henrichung/epitope_tag')"
+git clone https://github.com/henrichung/epitope_tag
 ```
 
 Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
-
-
-### Installing Epictope 
-
-Epictope is distributed as a R package. You can install it from this github repository using the *install_github* function from eiher the `remotes` or `devtools` R packages. This function is equivalent to the *install.packages()* function in base R, and should be entered in R through an interactive session or an IDE like RStudio.
-
-```
-# using remotes
-if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")
-}
-remotes::install_github("henrichung/epitope_tag")
-```
-```
-# using devtools
-if (!requireNamespace("devtools", quietly = TRUE)) {
-    install.packages("devtools")
-}
-devtools::install_github("henrichung/epitope_tag")
-```
-
-We also provide additional resources outside the main packages, such as scripts to automate conda installation, wrapper scripts for the Epictope workflow, and detailed step-by-step workflows as R Markdown Documents and Jupyter Notebooks. These can be downloaded from this repository through the webpage, or using git. Git is available on both MacOS/Linux and Windows machines
-
-```
-git clone https://github.com/henrichung/epitope_tag
-```
 
 ## Usage
 
@@ -172,7 +147,7 @@ Epictope searches for a "config.R" file in the working directory. If it doesn't 
 
 ### Examples
 
-Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine.
+Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine. These examples assume the installation steps for macOS/Linux have been followed, and this github repo has been downloaded to the project directory.
 
 #### Example 1A: Generating epictope predictions on macOS/Linux
 
