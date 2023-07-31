@@ -62,7 +62,7 @@ To calculate the multiple sequence alignment and secondary characteristics, Epic
 
 #### macOS/Linux installation
 
-For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the provided [epictope_environment_linux.yml](https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/epictope_environment_linux.yml) using the following commands. 
+For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the following commands. 
 
 1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
 
@@ -84,9 +84,10 @@ Additional installation methods for Linux can be found in the Detailed Installat
 
 #### Windows installation
 
-Detailed instructions for conda installation Windows can be found at this [link](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html).  Once installed, run the following commands to install the R and DSSP dependencies. Dependencies can be installed using the provided [epictope_environment_windows.yml](https://github.com/henrichung/epitope_tag/blob/main/install/windows/epictope_environment_windows.yml). Download or copy-paste the contents of the epictope_environment_windows.yml file and place the file in your working directory or project folder. Then use one of the subsequent methods to install. 
 
-BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to previous steps, we provide simple wrapper scripts to install both. We provide wrapper scripts for [blast](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_blast.bat) and [muscle](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_muscle.bat) separately.
+BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to previous steps, we provide simple wrapper scripts to install both.
+
+We provide wrapper scripts for [blast](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_blast.bat) and [muscle](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_muscle.bat) separately.
 
 1. Download and place the contents of the "install/windows" folder into your project directory. In Anaconda prompt, type "dir" to verify the files are in the correct folder.
 ```bash
