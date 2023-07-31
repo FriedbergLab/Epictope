@@ -158,7 +158,6 @@ Rscript epitope_tag/scripts/install.R
 Rscript epitope_tag/scripts/single_score.R Q9W7E7
 ```
 
-
 ### Example 1B: Generating epictope predictions on Windows
 
 On windows, the commands are the same as for Linux, except Windows uses a backwards slash "\\" instead of a forward slash "/".
@@ -170,7 +169,9 @@ Rscript epitope_tag\scripts\single_score.R Q9W7E7
 
 ### Example 2: Viewing your results.
 
-The Epictope workflow generates a "\<UniprotID\>_score.csv" file (ex: Q9W7E7_score.csv), containing the individual feature scores for each position, the minimum score across features for each position, and a weighted sum score of all features. These values can be plotted in the data visualization tool of choice. For convenience, we provide a "plot_scores.R" scripts that generates a plot of the minimum score for each position in the sequence using a rolling average of window size 7.
+The Epictope workflow generates a "\<UniprotID\>_score.csv" file (ex: Q9W7E7_score.csv), containing the individual feature scores for each position, the minimum score across features for each position, and a weighted sum score of all features. These values can be plotted in the data visualization tool of choice.
+
+ For convenience, we provide a "plot_scores.R" scripts that generates a plot of the minimum score for each position in the sequence using a rolling average of window size 7.
 
 The plot script can be run in the same way as previous commands.
 
