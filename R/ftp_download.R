@@ -29,7 +29,7 @@ ftp_download <- function(link, seq_type = "pep") {
       utils::download.file(
         url = paste0(link_url, filename),
         destfile = paste0(cds_folder, "/", filename),  # Set destination folder (change if needed)
-        method = "wget",
+        method = "curl",
         extra = "-nc"
       )
     },
