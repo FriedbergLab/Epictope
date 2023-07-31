@@ -36,7 +36,7 @@ calculate_scores <- function(feature_df) {
 
   # Determine the minimum feature value and corresponding feature for each position.
   res$min <- apply(res, 1, FUN = function(.x) { return(min(.x)) })
-  res$min_feature <- apply(res, 1, FUN = function(.x) { colnames(res)[which(.x == min(.x))] })
+  res$min_feature <- apply(res[c("normalized_entropy", "ss_score", "rsa", "inv_anchor2")], 1, FUN = function(.x) { colnames(res)[which(.x == min(.x))] })
 
   # Return the result.
   return(res)
