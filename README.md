@@ -194,7 +194,7 @@ Rscript epitope_tag/scripts/single_score.R outputs/Q9W7E7_score.csv
 
 #### Example 1B: Generating epictope predictions on Windows
 
-On windows, the commands are the same as for Linux, except Windows uses a backwards slash "/" instead of a forward slash "\\".
+On windows, the commands are the same as for Linux, except Windows uses a backwards slash "\\" instead of a forward slash "/".
 
 ```
 Rscript epitope_tag\scripts\install.R
