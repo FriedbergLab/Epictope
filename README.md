@@ -165,9 +165,7 @@ Examples for MaxOS/Linux can be run through terminal
 ```bash
 ls
 ```
-<figure style="display: inline-block; text-align: center;">
-  <img src="images/linux_files.png" alt="Alt text" title="Example Linux project directory." width="50%">
-</figure>
+2. Run the installation scripts with the following commands. 
 
 ```
 chmod +x environmental_install.sh
@@ -187,9 +185,6 @@ Examples for Windows can be run through the Anaconda Prompt, which is available 
 ```bash
 dir
 ```
-<figure style="display: inline-block; text-align: center;">
-  <img src="images/windows_files.png" alt="Alt text" title="Example windows project directory." width="50%">
-</figure>
 
 2. Run the installation scripts with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
 ```
