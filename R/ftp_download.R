@@ -23,12 +23,17 @@ ftp_download <- function(link, seq_type = "pep") {
   cds_link <- rvest::html_attr(rvest::html_nodes(webpage, "a"), "href")
   # Filter to ".fa.gz" extension
   filename <- cds_link[grepl("\\.all.fa\\.gz", cds_link)]
+  # Check if the file already exists in the destination folder
+  if (file.exists(file.path(cds_folder, filename))) {
+    message("File already exists. Skipping download.")
+    return(NULL)
+  }
   # Download
   tryCatch(
     {
       utils::download.file(
           url = paste0(link_url, filename),
-          destfile = paste0(cds_folder, "/", filename),  # Set destination folder (change if needed)
+          destfile = file.path(cds_folder, filename),  # Set destination folder (change if needed)
           method = "curl"
       )
     },
@@ -39,3 +44,4 @@ ftp_download <- function(link, seq_type = "pep") {
     }
   )
 }
+

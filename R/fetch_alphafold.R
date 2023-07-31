@@ -28,7 +28,7 @@ fetch_alphafold <- function(protein_id) {
   filename <- paste0("AF-", protein_id, version_suffix)
 
   # Add path to the output file
-  output_file <- paste0(model_folder, "/", filename)  # Set destination folder (change if needed)
+  output_file <- file.path(model_folder, filename)  # Set destination folder (change if needed)
 
   # Check if the file already exists in the specified directory
   if (file.exists(output_file)) {
