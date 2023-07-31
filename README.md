@@ -59,7 +59,7 @@ Installing Epictope and its dependencies will require at least 3GB of disk space
 
 #### macOS/Linux installation
 
-For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the following commands. 
+For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the following commands using the included terminal. 
 
 1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
 
@@ -67,7 +67,7 @@ For macOS/Linux, commands are issued at the terminal. Dependencies can be instal
 ls
 ```
 
-2. Run the installation scripts with the following commands. 
+2. Run the installation scripts in the terminal with the following commands. 
 ```
 chmod +x environmental_install.sh
 environment_install.sh
