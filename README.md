@@ -80,7 +80,7 @@ Additional installation methods for Linux can be found in the Detailed Installat
 
 
 #### Windows installation
-
+Epictope relies on local installation of BLAST, MUSCLE, and dssp to be installed. We recommended dependencies be installed with [Anaconda](https://www.anaconda.com/), a distribution of the Python and R programming languages for scientific computing. 
 
 BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to previous steps, we provide simple wrapper scripts to install both.
 
@@ -91,7 +91,7 @@ We provide wrapper scripts for [blast](https://github.com/henrichung/epitope_tag
 dir
 ```
 
-2. Run the installation scripts with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
+2. Run the installation scripts in Anaconda Prompt with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
 ```
 environment_install.bat
 install_muscle.bat
