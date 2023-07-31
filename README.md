@@ -54,7 +54,7 @@ Installing Epictope and its dependencies will require at least 3Gb of disk space
 
 To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named Epictope, and install the requisite packages into that environment. 
 
-Installing Epictope and its dependencies will require at least 3GB of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to  installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio. 
+Installing Epictope and its dependencies will require at least 3GB of disk space. Users should also be familar with using conda. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can also be run interactively through an R session or with an IDE such as RStudio. 
 
 
 #### macOS/Linux installation
