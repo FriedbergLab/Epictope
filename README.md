@@ -146,7 +146,7 @@ Epictope searches for a "config.R" file in the working directory. If it doesn't 
 
 ## Examples
 
-Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine. These examples assume the installation steps for macOS/Linux have been followed, and this github repo has been downloaded to the project directory.
+Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. These examples assume the installation steps for macOS/Linux have been followed.
 
 ### Example 1A: Generating epictope predictions on macOS/Linux
 
