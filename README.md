@@ -70,7 +70,7 @@ ls
 2. Run the installation scripts with the following commands. 
 ```
 chmod +x environmental_install.sh
-environmental_install.sh
+environment_install.sh
 conda activate epictope
 git clone https://github.com/henrichung/epitope_tag 
 R -e "remotes::install_github('henrichung/epitope_tag')"
@@ -93,7 +93,7 @@ dir
 
 2. Run the installation scripts with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
 ```
-environmental_install.bat
+environment_install.bat
 install_muscle.bat
 install_blast.bat
 conda activate epictope
