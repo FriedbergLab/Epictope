@@ -120,12 +120,12 @@ Example workflows with the Epictope package are available in the **vignettes** f
 Alternatively, the scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-command operation.
 To run, download the `install.R` and `single_score.R` scripts from this repository either directly from the github page or using git clone.
 
-- [install.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/install.R) -
+- [install.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/install.R)
   - This script first downloads the proteomes for the species used in the multiple sequence alignment from the NCBI FTP page.
   - It then converts these sequences into usable files for BLAST.
   - This file need to be re-run if the user changes the species considered in the multiple sequence alignment.
 
-- [single_score.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/single_score.R) -
+- [single_score.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/single_score.R)
   - This script takes a UniprotID as input and performs the Epictope workflow for that protein.
   - It first retrieves the amino acid sequence and Alphafold2 predicted structure for the protein.
   - It then BLASTs the protein against the proteomes of the animals used in the multiple sequence alignment, retrieves the highest scoring match (score measured by the lowest E-value), and aligns the matched proteins along with the query in a multiple sequence alignment.
@@ -215,8 +215,8 @@ Rscript epitope_tag\scripts\single_score.R outputs\Q9W7E7_score.csv
 ```
 
 <figure style="display: inline-block; text-align: center;">
-  <img src="images/Q9W7E7_score.tiff" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
-  <figcaption>Downloading the proteomes for animals used in the multiple sequence alignment. Files will only be downloaded once.</figcaption>.
+  <img src="images/Q9W7E7_score.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
+  <figcaption>Downloading the proteomes for animals used in the multiple sequence alignment. Files will only be downloaded once.</figcaption>
 </figure>
 
 #### Example 3: Generating Epictope predictions with custom settings
