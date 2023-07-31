@@ -9,6 +9,7 @@
 #' @export
 
 calculate_scores <- function(feature_df) {
+  feature_df <- feature_df[order(feature_df$position), ]
   # Normalize entropy by dividing by max
   normalized_entropy <- feature_df$shannon / 4.321928
 
