@@ -148,11 +148,11 @@ Each script can also be opened in an IDE such as Rstudio, and run interactively 
 
 The scoring function used by Epictope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
 
-Users can adjust the weight of each feature by modifying a "config.R" file. This file allows fine-tuning of parameters in Epictope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
+Users can adjust the weight of each feature by modifying the "config_defaults.R" file. This file allows fine-tuning of parameters in Epictope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
 
-Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config.R" value is provided.
+Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config_defaults.R" value is provided. To use, edit and rename the file to "config.R" and place it anywhere in your project directory. 
+
 ### Examples
-
 
 Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. Feel free to follow along and try these examples on your own machine.
 
@@ -198,7 +198,7 @@ Rscript epitope_tag\scripts\single_score.R Q9W7E7
 
 #### Example 3: Generating Epictope predictions with custom settings
 
-In this example, we will edit the "config.R" file 
+In this example, we will edit the "config_defaults.R" file to adjust how Epictope considers each score. Using a text editor, we will edit the 
 
 
 

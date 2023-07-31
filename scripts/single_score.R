@@ -54,4 +54,4 @@ norm_feats_df <- calculate_scores(features_df)
 
 # write to file.
 res_df <- merge(norm_feats_df, features_df)
-write.csv(apply(res_df,2,as.character), file = paste0(outputFolder, "/", query, "_score.csv"))
+write.csv(apply(res_df,2,as.character), file = paste0(outputFolder, "/", query, "_score.csv"), row.names = FALSE)

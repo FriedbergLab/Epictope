@@ -10,9 +10,10 @@
 check_config <- function() {
   files <- list.files(pattern = "^config.R$", recursive = TRUE, full.names = TRUE)
   if (length(files) > 0) {
-    message("Using custom configuration file.")
+    message("Found custom configuration file. Using custom values.")
     source(files[1])
   } else {
+    message("Using default configuration values.")
     # define species to run MSA against
     species <- c("bos_taurus", "canis_lupus_familiaris", "gallus_gallus", "homo_sapiens", "mus_musculus", "takifugu_rubripes", "xenopus_tropicalis")
     assign("species", species, envir = .GlobalEnv)

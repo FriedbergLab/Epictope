@@ -14,9 +14,6 @@
 #' @export
 
 ss_convert <- function(.x) {
-  # Define the Secondary Structure Symbol key and corresponding numeric values
-  ss_key <- c("G" = 0, "H" = 1, "I" = 1, "E" = 2, "C" = 2, "T" = 3, "B" = 3, "S" = 3)
-
   # Check if .x is a recognized Secondary Structure Symbol
   if (!grepl("[GHIECTBS]", .x)) {
     # If not, print an error message and return NULL
