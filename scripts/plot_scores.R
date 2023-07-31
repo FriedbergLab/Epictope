@@ -61,7 +61,7 @@ x_labels <- as.character(x_ticks)
 par(mar=c(1,1,1,1))
 
 # Open the TIFF device
-tiff(paste0("outputs/", output_filename), width = 6, height = 4, units = "in", res = 300)
+tiff(output_filename, width = 6, height = 4, units = "in", res = 300)
 plot(plot_data$id, as.numeric(plot_data$value), type = "n", xlab = "Amino Acid Position", ylab = "Score",
      xaxt = 'n', yaxt = 'n', xlim = c(1, max_id), ylim = y_range)
 lines(plot_data$id, as.numeric(plot_data$value), lty = "solid", col = "black")

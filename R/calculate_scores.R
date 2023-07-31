@@ -23,7 +23,7 @@ calculate_scores <- function(feature_df) {
   inv_anchor2 <- 1 - feature_df$anchor2
 
   # Calculate the final score using a weighted sum of features
-  tag_score <- (h_weight * normalized_entropy) + (ss_weight * ss_score) + (rsa_weight * rsa) + (br_weight * inv_anchor2)
+  sum_score <- (h_weight * normalized_entropy) + (ss_weight * ss_score) + (rsa_weight * rsa) + (br_weight * inv_anchor2)
 
   # Bind scores to the dataframe.
   res <- data.frame(
@@ -32,7 +32,7 @@ calculate_scores <- function(feature_df) {
     ss_score = ss_score,
     rsa = rsa,
     inv_anchor2 = inv_anchor2,
-    tag_score = tag_score
+    sum_score = sum_score
   )
 
   # Determine the minimum feature value and corresponding feature for each position.

@@ -26,7 +26,7 @@ iupred_df <- iupredAnchor(query)
 seq <- Biostrings::AAStringSet(uniprot_data$Sequence, start=NA, end=NA, width=NA, use.names=TRUE)
 
 # list of amino acid files to blast against
-aa_files <-  list.files(cds_folder, pattern = "\\.all.fa$", full.names = TRUE, recursive = TRUE)
+aa_files <-  list.files(cds_folder, pattern = paste0(species, ".*\\.all.fa$", collapse = "|"), ignore.case = TRUE, full.names = TRUE, recursive = TRUE)
 names(aa_files) <- aa_files
 
 # blast
