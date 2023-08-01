@@ -93,9 +93,7 @@ dir
 
 2. Run the installation scripts in Anaconda Prompt with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
 ```
-environment_install.bat
-install_muscle.bat
-install_blast.bat
+epictope_install.bat
 conda activate epictope
 git clone https://github.com/henrichung/epitope_tag 
 R -e "remotes::install_github('henrichung/epitope_tag')"

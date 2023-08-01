@@ -25,7 +25,7 @@ ftp_download <- function(link, seq_type = "pep") {
   filename <- cds_link[grepl("\\.all.fa\\.gz", cds_link)]
   # Check if the file already exists in the destination folder
   if (file.exists(file.path(cds_folder, filename))) {
-    message("File already exists. Skipping download.")
+    message(file.path(cds_folder, filename), " already exists. Skipping download.")
     return(NULL)
   }
   # Download
