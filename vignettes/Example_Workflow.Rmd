@@ -16,32 +16,14 @@ knitr::opts_chunk$set(
 ### Introduction
 This vignette goes through an example workflow using the `epictope` package. `epictope` facilitates the identification of optimal tagging locations for proteins of interest. Optimal locations are identified by considering four features; sequence conservation, secondary structure, solvent accessibility, and disordered binding regions. These four features are factored into a scoring function that calculates a cumulative score for each position in the protein. The weight of each feature and how they contribute to the final score can be defined by the user. Below, we work through a simple example of this workflow for a protein of interest.
 
+To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, MUSCLE, and DSSP. The recommended way to run Epictope is through R or RStudio inside a conda environment. 
 
-### Dependencies
-To calculate the multiple sequence alignment and secondary characteristics, `epictope` relies on local installs of BLAST, muscle, and dssp. These packages can be installed using conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named "epictope", and install the requisite packages into that environment. Alternative ways to install `epictope` dependencies are can be found [here](https://github.com/henrichung/epitope_tag#dependencies)
-
-```{r, eval = FALSE}
-conda create -n epictope
-conda activate epictope
-conda install -c bioconda blast muscle
-conda install -c salilab dssp
-conda install -c conda-forge r-base r-stringi r-openssl gzip git
-```
-
-### Installation
-
-The `epictope` package can be installed from github using the `remotes` or `devtools` package.
-
-```{r, eval = FALSE}
-install.packages("remotes")
-remotes::install_github("henrichung/epitope_tag")
-```
 
 #### Verify installation
 To check if `epictope` has been installed correctly, we can attempt the load the package using "library()". If successful, the command should run without any further messages to the console. Once `epictope` has been loaded, we can use the provided ".FindExecutable()" function to determine if the dependencies have been successfully installed and are identifiable by R. If successful, the output of each .FindExecutable command should list the file location of the program. 
 
 ```{r, eval = FALSE}
-#library(epictope) # check if epictope is installed and loadable
+library(epictope) # check if epictope is installed and loadable
 epictope::.findExecutable("muscle") # looks for muscle executable
 # ~/hchung/epictope/bin/muscle" 
 epictope::.findExecutable("blastp") # looks for blast executable
@@ -50,90 +32,31 @@ epictope::.findExecutable("mkdssp") # looks for dssp executable
 # ~/hchung/epictope/bin/mkdssp" 
 ```
 
-#### Configuration file
-
-`epictope` uses pre-defined values to determine the score and weight of each feature. These values can be adjusted by the user by creating a "config.R" file in the working directory. If a "config.R" file is not found, epictope will use the default values. In either case, the score and weight values are loaded into the environment with the "check_config()".
-```{r, eval = FALSE}
-check_config()
-```
-
-The scores and weights loaded by default are shown below. These settings can be changed by simply copy-pasting the following lines into a "config.R" file, manually adjusting the numbers, and then re-running the check_config() function. 
-
-```{r, eval = FALSE}
-# define species to run MSA against
-species <- c("bos_taurus", "canis_lupus_familiaris", "gallus_gallus", "homo_sapiens", "mus_musculus", "takifugu_rubripes", "xenopus_tropicalis")
-
-# weights for tagging features
-h_weight = 1.5 # shannon entropy
-rsa_weight = 1 # solvent accessable surface area
-ss_weight = 1 # secondary structure
-br_weight = 1 # disordered binding region
-
-# value for secondary structures, must be 0-1.
-# each letter refers to a type of secondary structure
-# the number indicates the value or "suitability" for tagging.
-# values should be from 0-1, with higher values indicating greater
-# suitability for tagging.
-ss_key <- list(
-    "G" = 0, 
-    "H" = 0, 
-    "I" = 0,
-    "E" = 0, 
-    "C" = 1,
-    "T" = 0.5, 
-    "B" = 0.5, 
-    "S" = 0.5)
-
-# reference values for maximum solvent accesibility of amino acids.
-# default values estimate from the following study;
-# https://doi.org/10.1371/journal.pone.0080635
-aa <- c("A", "R", "N", "D", "C", "E", "Q", "G", "H", "I", "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V")
-empirical <- c(121, 265, 187, 187, 148, 214, 214, 97, 216, 195, 191, 230, 203, 228, 154, 143, 163, 264, 255, 165)
-max_sasa <- setNames(empirical, aa)
-
-```
-
-#### Folder structure
-The epitope software recommends a specified file structure to store species proteomes and temporary files. This folder structure is outlined as follows;
-```{r, eval = FALSE}
-project_folder
-├── code 
-├── config # configuration file for scoring 
-├── install.R # helper script
-├── single_score.R
-├── data
-│   ├── CDS # for protein sequences in coding regions for each organism in the MSA
-│   └── models # for the predicted alphafold2 structure for a protein of interest
-├── outputs # for the output scores
-└── README.md
-```
-
-To set up this structure, we include a simple function `setup_files` to create this structure for the user. 
-```{r, eval = FALSE}
-setup_files()
-```
 ### Workflow
 
-Once set up is complete, we can use the package functions to identify optimal tagging locations as follows. To start, we will need to download the protein sequences of the organisms we want to compare against for a multiple sequence alignment. Afterwards, the `data/CDS` folder should be populated with ".gz" files for each of the organisms used in the multiple sequence alignment.
+Once we have verified Epictope and its dependencies are installed, we can use the package functions to identify optimal tagging locations as follows. To start, we will need to download the protein sequences of the organisms we want to compare against for a multiple sequence alignment. Afterwards, the `data/CDS` folder should be populated with ".gz" files for each of the organisms used in the multiple sequence alignment.
 
 
 ```{r, eval = FALSE}
+setup_files()
+check_config()
 # search for the default species specified with the config file 
 protein_links <- ftp_search(species)
 # download the sequences
 lapply(protein_links, ftp_download)
 
-# we can also specify the sequences at the time of search 
-#protein_links <- ftp_search(species = c("Mus_musculus", "Bos_taurus"))
+# we can also specify the animals we want to use at the time of search 
+#species <- c("Mus_musculus", "Bos_taurus")
+#protein_links <- ftp_search(species)
 #lapply(protein_links, ftp_download)
 ```
 
-Next, we will need to specify the *UniprotID* of the protein you are interested in. UniProt is a freely accessible database of protein sequence and functional information. A single gene can encode multiple protein isoforms through  alternative splicing. Starting with the UniprotID allows to know which specific protein isoform we are interested in and working with. 
+Next, we will need to specify the *UniprotID* of the protein you are interested in. [UniProt](https://www.uniprot.org/) is a freely accessible database of protein sequence and functional information. A single gene can encode multiple protein isoforms through  alternative splicing. Starting with the UniprotID allows to know which specific protein isoform we are interested in and working with. 
 
 ```{r, eval = FALSE}
-query <- "P57102" # The UniprotID of the protein we are looking for. In this example, we use the Hand2 gene for zebrafish.
-uniprot_fields <- c("accession", "id", "gene_names", "xref_alphafolddb", "sequence", "organism_name", "organism_id") # The features for the uniprot id we are interested in retieving. 
-uniprot_data <- query_uniProt(query = query, fields = uniprot_fields) # fetch uniprot data
+query <- "Q9W7E7" # The UniprotID of the protein we are looking for. In this example, we use the Smad5 gene for zebrafish.
+uniprot_fields <- c("accession", "id", "gene_names", "xref_alphafolddb", "sequence", "organism_name", "organism_id")
+uniprot_data <- query_uniProt(query = query, fields = uniprot_fields)
 ```
 
 Using the Alphafold2ID provided by Uniprot, we can download the Protein Data Bank file or the AlphaFold2 predicted structure for the protein of interest. We then run DSSP to define the secondary structures from the Alphafold2 PDB file and parse out the results to a dataframe.
@@ -189,7 +112,8 @@ features_df <- Reduce(function(x, y) merge(x, y, all=TRUE), list(shannon_df, dss
 colnames(features_df)
 # normalize features and calculate tagging score
 norm_feats_df <- calculate_scores(features_df)
+
 # write to file.
 res_df <- merge(norm_feats_df, features_df)
-write.csv(apply(res_df,2,as.character), file = paste0(outputFolder, "/", query, "_score.csv"))
+write.csv(apply(res_df,2,as.character), file = paste0(outputFolder, "/", query, "_score.csv"), row.names = FALSE)
 ```

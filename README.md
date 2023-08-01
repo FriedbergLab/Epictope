@@ -48,22 +48,21 @@ Disordered binding regions are sections of a protein that do not have a well-def
 ## Installation
 
 ### System requirements
-Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can be run interactively through an R session or with an IDE such as RStudio.
+Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment.  
 
 ### Software dependencies
 
-To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named Epictope, and install the requisite packages into that environment. 
-
-Installing Epictope and its dependencies will require at least 3GB of disk space. Users should also be familar with using conda. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment. For users familiar with R, Epictope can also be run interactively through an R session or with an IDE such as RStudio. 
+To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named Epictope, and install the requisite packages into that environment. Installing Epictope and its dependencies will require at least 3GB of disk space.  
 
 
 ### macOS/Linux installation
 
-For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the following commands using the included terminal. 
+For macOS/Linux, commands are issued at the terminal. Dependencies can be installed using the following commands.
 
 1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
 
 ```bash
+wget https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/environment_install.sh
 ls
 ```
 
@@ -80,14 +79,12 @@ Additional installation methods for Linux can be found in the Detailed Installat
 
 
 ### Windows installation
-Epictope relies on local installation of BLAST, MUSCLE, and dssp to be installed. We recommended dependencies be installed with [Anaconda](https://www.anaconda.com/), a distribution of the Python and R programming languages for scientific computing. 
 
-BLAST and MUSCLE are not available for installation on Windows with conda. Detailed instructions for installation on Windows can be found for [BLAST](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_blast.html) and [MUSCLE](https://2018-03-06-ibioic.readthedocs.io/en/latest/install_muscle.html) for MUSCLE. Similar to previous steps, we provide simple wrapper scripts to install both.
+BLAST and MUSCLE are not available for installation on Windows with conda and have to be installed separately. We provide a wrapper script to install these programs and the conda environment. 
 
-We provide wrapper scripts for [blast](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_blast.bat) and [muscle](https://github.com/henrichung/epitope_tag/blob/main/install/windows/install_muscle.bat) separately.
-
-1. Download and place the contents of the "install/windows" folder into your project directory. In Anaconda prompt, type "dir" to verify the files are in the correct folder.
+1. In Anaconda prompt, download and place the "epictope_install.bat" folder into your project directory with curl. Type "dir" to verify the files are in the correct folder.
 ```bash
+curl -o epictope_install.bat https://raw.githubusercontent.com/henrichung/epitope_tag/main/install/windows/epictope_install.bat
 dir
 ```
 
@@ -103,11 +100,57 @@ Additional installation methods for Windows can be found in the Detailed Install
 
 ## Usage
 
+Here, we provide usage examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the function. These examples assume the installation steps have been followed.
+
+### Example 1A: Generating epictope predictions on macOS/Linux
+
+For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
+
+Run the Epictope workflow with the following commands in the terminal.
+```
+conda activate epictope
+Rscript epitope_tag/scripts/install.R
+Rscript epitope_tag/scripts/single_score.R Q9W7E7
+```
+
+### Example 1B: Generating epictope predictions on Windows
+
+On windows, the commands are the same as for Linux, except Windows uses a backwards slash "\\" instead of a forward slash "/".
+Run the Epictope workflow with the following commands in Anaconda Prompt.
+```bash
+conda activate epictope
+Rscript epitope_tag\scripts\install.R
+Rscript epitope_tag\scripts\single_score.R Q9W7E7
+```
+
+### Example 2: Viewing your results.
+
+The Epictope workflow generates a "\<UniprotID\>_score.csv" file (ex: Q9W7E7_score.csv), containing the individual feature scores for each position, the minimum score across features for each position, and a weighted sum score of all features. These values can be plotted in the data visualization tool of choice.
+
+For convenience, we provide a "plot_scores.R" scripts that generates a plot of the minimum score for each position in the sequence using a rolling average of window size 7.
+
+The plot script can be run in the same way as previous commands.
+
+On Linux, the command is run in the terminal 
+```bash
+Rscript epitope_tag/scripts/plot_score.R outputs/Q9W7E7_score.csv
+```
+
+On Windows, the command can be run in Anaconda Prompt.
+```bash
+Rscript epitope_tag\scripts\plot_score.R outputs\Q9W7E7_score.csv
+```
+
+<figure style="display: inline-block; text-align: center;">
+  <img src="images/Q9W7E7_score.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
+  <figcaption>Example minimum score plot for Q9W7E7. Values smoothed over a windows size of 7.</figcaption>
+</figure>
+
 ### Workflow notebooks
-Example workflows with the Epictope package are available in the **vignettes** folder. Workflows are available as both [R Markdown Documents](https://rmarkdown.rstudio.com/) and [Jupyter](https://jupyter.org/) notebooks. These workflows go through the Epictope workflow step by step in an interactive session or an IDE. 
+Example workflows with the Epictope package are available in the **vignettes** folder. Workflows are available as both [R Markdown Documents](https://rmarkdown.rstudio.com/) and [Jupyter](https://jupyter.org/) notebooks. These workflows go through the Epictope workflow step by step in an interactive session or an IDE. *IDE usage requires access to local installations of BLAST, MUSCLE, and DSSP by the IDE.*
 
 ### Macro scripts
-Alternatively, the scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-command operation.
+The scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-command operation.
 To run, download the `install.R` and `single_score.R` scripts from this repository either directly from the github page or using git clone.
 
 - [install.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/install.R)
@@ -127,6 +170,7 @@ To run, download the `install.R` and `single_score.R` scripts from this reposito
 
 
 From the terminal, these scripts can be run as follows.
+
 ```
 Rscript install.R 
 Rscript single_score.R "P57102" # replace 'P57102' with the UniprotID for your protein of interest.
@@ -141,52 +185,6 @@ A second scoring function used by Epictope sums the calculated scores for the pr
 Users can adjust the weight of each feature by modifying the "config_defaults.R" file. This file allows fine-tuning of parameters in Epictope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
 
 Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config_defaults.R" value is provided. To use, edit and rename the file to "config.R" and place it anywhere in your project directory. 
-
-## Examples
-
-Here, we provide some examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the functionalities. These examples assume the installation steps for macOS/Linux have been followed.
-
-### Example 1A: Generating epictope predictions on macOS/Linux
-
-For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
-
-Run the Epictope workflow with the following commands.
-```
-Rscript epitope_tag/scripts/install.R
-Rscript epitope_tag/scripts/single_score.R Q9W7E7
-```
-
-### Example 1B: Generating epictope predictions on Windows
-
-On windows, the commands are the same as for Linux, except Windows uses a backwards slash "\\" instead of a forward slash "/".
-
-```bash
-Rscript epitope_tag\scripts\install.R
-Rscript epitope_tag\scripts\single_score.R Q9W7E7
-```
-
-### Example 2: Viewing your results.
-
-The Epictope workflow generates a "\<UniprotID\>_score.csv" file (ex: Q9W7E7_score.csv), containing the individual feature scores for each position, the minimum score across features for each position, and a weighted sum score of all features. These values can be plotted in the data visualization tool of choice.
-
- For convenience, we provide a "plot_scores.R" scripts that generates a plot of the minimum score for each position in the sequence using a rolling average of window size 7.
-
-The plot script can be run in the same way as previous commands.
-
-On Linux, the command is run in the terminal 
-```bash
-Rscript epitope_tag/scripts/plot_score.R outputs/Q9W7E7_score.csv
-```
-
-On Windows, the command can be run in Anaconda Prompt.
-```bash
-Rscript epitope_tag\scripts\plot_score.R outputs\Q9W7E7_score.csv
-```
-
-<figure style="display: inline-block; text-align: center;">
-  <img src="images/Q9W7E7_score.png" alt="Alt text" title="Tcf21 Multiple Sequence Alignment." width="50%">
-  <figcaption>Example minimum score plot for Q9W7E7. Values smoothed over a windows size of 7.</figcaption>
-</figure>
 
 
 ## License 
