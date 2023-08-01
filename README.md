@@ -2,11 +2,11 @@
 
 Software for predicting epitope tag insertion sites in proteins.
 
-Epictope is an R package/pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessabilty to predict suitable internal locations for tag insertion.
+Epictope is an R package/pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessibility to predict suitable internal locations for tag insertion.
 
 The primary score for Epictope relies on a "least-worst" approach, where insertion site suitability is identified by  positions where the lowest scoring feature is the highest. For a given position, we sort the feature scores from lowest to highest, and take the lowest score. We then plot the lowest score for each position, and determine positions where this lowest score is highest to be suitable positions for tagging. 
 
-This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow executation, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can be installed as a package with Epictope). You will need at least 3GB of disk space.
+This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow execution, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can be installed as a package with Epictope). You will need at least 3GB of disk space.
 
 ## Table of Contents
 - [Methodology](#methodology)
