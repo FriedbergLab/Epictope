@@ -24,11 +24,14 @@
 #' @export
 #' 
 make_protein_db <- function(gz_file) {
-  # Decompress the input file
-  R.utils::gunzip(gz_file, remove = FALSE)
-
-  # Remove the ".gz" extension from the file name
+  # Remove the ".gz" extension from the input file name
   file <- gsub(".gz", "", gz_file)
+
+  # Check if the unzipped file already exists
+  if (!file.exists(file)) {
+    # Decompress the input file
+    R.utils::gunzip(gz_file, remove = FALSE)
+  }
 
   # Create the protein BLASTable database
   system(command = paste("makeblastdb -in ", file, " -dbtype prot"))
