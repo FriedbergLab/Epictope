@@ -70,9 +70,6 @@ ls
 ```
 chmod +x environmental_install.sh
 environment_install.sh
-conda activate epictope
-git clone https://github.com/henrichung/epitope_tag 
-R -e "remotes::install_github('henrichung/epitope_tag')"
 ```
 
 Additional installation methods for Linux can be found in the Detailed Installation for Linux [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
@@ -81,6 +78,9 @@ Additional installation methods for Linux can be found in the Detailed Installat
 ### Windows installation
 
 BLAST and MUSCLE are not available for installation on Windows with conda and have to be installed separately. We provide a wrapper script to install these programs and the conda environment. 
+
+Sure, here are the detailed steps to open Anaconda Prompt, create a new project folder, and then 'cd' (change directory) into it on a Windows machine:
+
 
 1. In Anaconda prompt, download and place the "epictope_install.bat" folder into your project directory with curl. Type "dir" to verify the files are in the correct folder.
 ```bash
@@ -91,12 +91,9 @@ dir
 2. Run the installation scripts in Anaconda Prompt with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
 ```
 epictope_install.bat
-conda activate epictope
-git clone https://github.com/henrichung/epitope_tag 
-R -e "remotes::install_github('henrichung/epitope_tag')"
 ```
 
-Additional installation methods for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
+More detailed instructions for Windows can be found in the Detailed Installation for Windows [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Windows-Instructions)
 
 ## Usage
 
@@ -107,10 +104,10 @@ Here, we provide usage examples to demonstrate how to use Epictope. Each example
 For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
 
 Run the Epictope workflow with the following commands in the terminal.
-```
+```bash
 conda activate epictope
-Rscript epitope_tag/scripts/install.R
-Rscript epitope_tag/scripts/single_score.R Q9W7E7
+Rscript install.R
+Rscript single_score.R Q9W7E7
 ```
 
 ### Example 1B: Generating epictope predictions on Windows
@@ -119,8 +116,8 @@ On windows, the commands are the same as for Linux, except Windows uses a backwa
 Run the Epictope workflow with the following commands in Anaconda Prompt.
 ```bash
 conda activate epictope
-Rscript epitope_tag\scripts\install.R
-Rscript epitope_tag\scripts\single_score.R Q9W7E7
+Rscript install.R
+Rscript single_score.R Q9W7E7
 ```
 
 ### Example 2: Viewing your results.
@@ -131,14 +128,9 @@ For convenience, we provide a "plot_scores.R" scripts that generates a plot of t
 
 The plot script can be run in the same way as previous commands.
 
-On Linux, the command is run in the terminal 
 ```bash
-Rscript epitope_tag/scripts/plot_score.R outputs/Q9W7E7_score.csv
-```
-
-On Windows, the command can be run in Anaconda Prompt.
-```bash
-Rscript epitope_tag\scripts\plot_score.R outputs\Q9W7E7_score.csv
+Rscript plot_score.R outputs/Q9W7E7_score.csv
+Q97W7E7.tiff
 ```
 
 <figure style="display: inline-block; text-align: center;">

@@ -50,3 +50,12 @@ if exist muscle.exe (
     :: report success
     echo MUSCLE installation complete.
 )
+
+:: EPICTOPE INSTALLATION
+:: Check if the file exists
+call conda activate epictope
+call R -e "remotes::install_github('henrichung/epitope_tag')"
+call -o "single_score.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R"
+call -o "plot_scores.R" "https://github.com/henrichung/epitope_tag/blob/main/scripts/plot_scores.R"
+call -o "install.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/install.R"
+call -o "config_defaults.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/config_defaults.R"
