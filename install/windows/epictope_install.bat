@@ -56,6 +56,6 @@ if exist muscle.exe (
 call conda activate epictope
 call R -e "remotes::install_github('henrichung/epitope_tag')"
 call curl -o "single_score.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R"
-call curl -o "plot_scores.R" "https://github.com/henrichung/epitope_tag/blob/main/scripts/plot_scores.R"
+call curl -o "plot_scores.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/plot_scores.R"
 call curl -o "install.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/install.R"
 call curl -o "config_defaults.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/config_defaults.R"
