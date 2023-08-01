@@ -88,7 +88,7 @@ curl -o epictope_install.bat https://raw.githubusercontent.com/henrichung/epitop
 dir
 ```
 
-2. Run the installation scripts in Anaconda Prompt with the following commands. Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
+2. Run the installation scripts in Anaconda Prompt with the following commands. If prompted by Conda, type "Y" for Yes and then press "Enter".  Click "Yes" if a pop-up window asks if you allow this app to make changes to your advice.
 ```
 epictope_install.bat
 ```
