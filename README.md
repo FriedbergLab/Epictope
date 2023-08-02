@@ -69,7 +69,7 @@ ls
 2. Run the installation scripts in the terminal with the following commands. 
 ```
 chmod +x epictope_install.sh
-epictope_install.sh
+./epictope_install.sh
 ```
 
 Additional installation methods for Linux can be found in the Detailed Installation for Linux [page](https://github.com/henrichung/epitope_tag/wiki/Detailed-Linux-Instructions)
