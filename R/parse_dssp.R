@@ -33,9 +33,9 @@ parse_dssp <- function(file, keepfiles = TRUE) {
       l <- strsplit(line, split = "")[[1]]
       l <- paste(l, collapse = "")
       if ("have bz2" %in% l) {
-        first_valid_line <- 28  # DSSP file coming from the API
+          if(.Platform$OS.type == "unix") {first_valid_line <- 29} else {first_valid_line <- 28}
       } else {
-        first_valid_line <- 27  # DSSP file coming from the sync
+          if(.Platform$OS.type == "unix") {first_valid_line <- 28} else {first_valid_line <- 27}
       }
     }
 
