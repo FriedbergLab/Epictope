@@ -1,12 +1,10 @@
 #!/bin/bash
 # Install conda
-conda config --set always_yes yes
 conda create -n epictope
 conda activate epictopeR
 conda install -c bioconda blast muscle
 conda install -c salilab dssp
 conda install -c conda-forge r-base r-stringi r-openssl r-remotes
-conda config --set always_yes no
 
 # Install R packages
 R -e "remotes::install_github('henrichung/epitope_tag')"
