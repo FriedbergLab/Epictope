@@ -1,7 +1,7 @@
 #!/bin/bash
 # Install conda
 conda create -n epictope
-conda activate epictopeR
+conda activate epictope
 conda install -c bioconda blast muscle
 conda install -c salilab dssp
 conda install -c conda-forge r-base r-stringi r-openssl r-remotes
