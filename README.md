@@ -62,7 +62,7 @@ For macOS/Linux, commands are issued at the terminal. Dependencies can be instal
 1. Download and place the contents of the "install/mac_linux" folder into your project directory. In your terminal, type "ls" to verify the files are in the correct folder.
 
 ```bash
-wget https://github.com/henrichung/epitope_tag/blob/main/install/mac_linux/epictope_install.sh
+curl -o "epictope_install.sh" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/install/mac_linux/epictope_install.sh"
 ls
 ```
 
