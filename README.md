@@ -129,7 +129,7 @@ For convenience, we provide a "plot_scores.R" scripts that generates a plot of t
 The plot script can be run in the same way as previous commands.
 
 ```bash
-Rscript plot_score.R outputs/Q9W7E7_score.csv
+Rscript plot_scores.R outputs/Q9W7E7_score.csv
 "outputs/Q97W7E7.tiff"
 ```
 
