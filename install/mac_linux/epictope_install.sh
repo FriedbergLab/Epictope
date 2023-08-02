@@ -4,7 +4,8 @@ conda create -n epictope
 conda activate epictope
 conda install -c bioconda blast muscle
 conda install -c salilab dssp
-conda install -c conda-forge r-base r-stringi r-openssl r-remotes
+conda install -c anaconda openssl>=3.0.9
+conda install -c conda-forge r-base r-stringi r-openssl r-remotes python>=3.11.4
 
 # Install R packages
 R -e "remotes::install_github('henrichung/epitope_tag')"
