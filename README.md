@@ -178,6 +178,9 @@ Users can adjust the weight of each feature by modifying the "config_defaults.R"
 
 Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config_defaults.R" value is provided. To use, edit and rename the file to "config.R" and place it anywhere in your project directory. 
 
+### Frequently Asked Questions
+
+A growing FAQ can be found in our repository wiki [page](https://github.com/henrichung/epitope_tag/wiki/F.A.Q).
 
 ## License 
 
