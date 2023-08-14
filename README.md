@@ -1,12 +1,12 @@
-# Epictope
+# EpicTope
 
 Software for predicting epitope tag insertion sites in proteins.
 
-Epictope is an R package/pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessibility to predict suitable internal locations for tag insertion.
+EpicTope is an R package/pipeline to identify epitope tag insertion sites for proteins of interest. It uses four features of protein structure; sequence conservation, secondary structure, disordered binding regions, and relative solvent accessibility to predict suitable internal locations for tag insertion.
 
-The primary score for Epictope relies on a "least-worst" approach, where insertion site suitability is identified by  positions where the lowest scoring feature is the highest. For a given position, we sort the feature scores from lowest to highest, and take the lowest score. We then plot the lowest score for each position, and determine positions where this lowest score is highest to be suitable positions for tagging. 
+The primary score for EpicTope relies on a "least-worst" approach, where insertion site suitability is identified by  positions where the lowest scoring feature is the highest. For a given position, we sort the feature scores from lowest to highest, and take the lowest score. We then plot the lowest score for each position, and determine positions where this lowest score is highest to be suitable positions for tagging. 
 
-This repository contains the code source of the R Epictope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow execution, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can be installed as a package with Epictope). You will need at least 3GB of disk space.
+This repository contains the code source of the R EpicTope package, step-by-step R Markdown and Jupyter notebooks to run the complete workflow, wrapped scripts for simplified workflow execution, and instructions to adjust the weight and effect of each considered feature. The package requires local installations of BLAST, MUSCLE, and DSSP to run (those can be installed as a package with EpicTope). You will need at least 3GB of disk space.
 
 ## Table of Contents
 - [Methodology](#methodology)
@@ -17,8 +17,8 @@ This repository contains the code source of the R Epictope package, step-by-step
 ## Methodology
 
 <figure style="display: inline-block; text-align: center;">
-  <img src="images/workflow.png" alt="Alt text" title="Epictope workflow." width="75%">
-  <figcaption>Epictope workflow. Starting from a protein of interest, the Epictope workflow automates multiple sequence alignment, downloading of predicted protein structure from AlphaFold2, and fetching disordered binding regions from IUPred2A.</figcaption>.
+  <img src="images/workflow.png" alt="Alt text" title="EpicTope workflow." width="75%">
+  <figcaption>EpicTope workflow. Starting from a protein of interest, the EpicTope workflow automates multiple sequence alignment, downloading of predicted protein structure from AlphaFold2, and fetching disordered binding regions from IUPred2A.</figcaption>.
 </figure>
 
 
@@ -48,11 +48,11 @@ Disordered binding regions are sections of a protein that do not have a well-def
 ## Installation
 
 ### System requirements
-Installing Epictope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment.  
+Installing EpicTope and its dependencies will require at least 3Gb of disk space. Users should also be familar with using conda, a package manager for macOS/linux and Windows. Conda does not need to be used if users already have access to installations of BLAST, MUSCLE, and DSSP, either locally or on an HPC environment.  
 
 ### Software dependencies
 
-To calculate the multiple sequence alignment and secondary characteristics, Epictope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named Epictope, and install the requisite packages into that environment. Installing Epictope and its dependencies will require at least 3GB of disk space.  
+To calculate the multiple sequence alignment and secondary characteristics, EpicTope relies on local installs of BLAST, MUSCLE, and DSSP. These packages can be installed using Conda, an open-source package management system and environment management system that runs on Windows, macOS, and Linux. Conda installers can be found at the Anaconda [website](https://www.anaconda.com/). Once installed, you may run the follow commands to install the requisite packages. These commands will create a conda environment named EpicTope, and install the requisite packages into that environment. Installing EpicTope and its dependencies will require at least 3GB of disk space.  
 
 
 ### macOS/Linux installation
@@ -68,7 +68,7 @@ ls
 
 2. Run the installation scripts in the terminal with the following commands. 
 ```
-chmod +x epictope_install.sh
+chmod u+x epictope_install.sh
 bash -i epictope_install.sh
 ```
 
@@ -97,23 +97,23 @@ More detailed instructions for Windows can be found in the Detailed Installation
 
 ## Usage
 
-Here, we provide usage examples to demonstrate how to use Epictope. Each example includes a brief description and code snippets or commands to showcase the function. These examples assume the installation steps have been followed.
+Here, we provide usage examples to demonstrate how to use EpicTope. Each example includes a brief description and code snippets or commands to showcase the function. These examples assume the installation steps have been followed.
 
-### Example 1A: Generating epictope predictions on macOS/Linux
+### Example 1A: Generating EpicTope predictions on macOS/Linux
 
 For our example, we investigate the Smad5 gene for Zebrafish. Searching for the protein transcript in [Uniprot](https://www.uniprot.org/uniprotkb/Q9W7E7/entry), we find it's UniprotID is "Q9W7E7"
 
-Run the Epictope workflow with the following commands in the terminal.
+Run the EpicTope workflow with the following commands in the terminal.
 ```bash
 conda activate epictope
 Rscript install.R
 Rscript single_score.R Q9W7E7
 ```
 
-### Example 1B: Generating epictope predictions on Windows
+### Example 1B: Generating EpicTope predictions on Windows
 
 On windows, the commands are the same as for Linux, except Windows uses a backwards slash "\\" instead of a forward slash "/".
-Run the Epictope workflow with the following commands in Anaconda Prompt.
+Run the EpicTope workflow with the following commands in Anaconda Prompt.
 ```bash
 conda activate epictope
 Rscript install.R
@@ -122,7 +122,7 @@ Rscript single_score.R Q9W7E7
 
 ### Example 2: Viewing your results.
 
-The Epictope workflow generates a "\<UniprotID\>_score.csv" file (ex: Q9W7E7_score.csv), containing the individual feature scores for each position, the minimum score across features for each position, and a weighted sum score of all features. These values can be plotted in the data visualization tool of choice.
+The EpicTope workflow generates a "\<UniprotID\>_score.csv" file (ex: Q9W7E7_score.csv), containing the individual feature scores for each position, the minimum score across features for each position, and a weighted sum score of all features. These values can be plotted in the data visualization tool of choice.
 
 For convenience, we provide a "plot_scores.R" scripts that generates a plot of the minimum score for each position in the sequence using a rolling average of window size 7.
 
@@ -139,7 +139,7 @@ Rscript plot_scores.R outputs/Q9W7E7_score.csv
 </figure>
 
 ### Workflow notebooks
-Example workflows with the Epictope package are available in the **vignettes** folder. Workflows are available as both [R Markdown Documents](https://rmarkdown.rstudio.com/) and [Jupyter](https://jupyter.org/) notebooks. These workflows go through the Epictope workflow step by step in an interactive session or an IDE. *IDE usage requires access to local installations of BLAST, MUSCLE, and DSSP by the IDE.*
+Example workflows with the EpicTope package are available in the **vignettes** folder. Workflows are available as both [R Markdown Documents](https://rmarkdown.rstudio.com/) and [Jupyter](https://jupyter.org/) notebooks. These workflows go through the EpicTope workflow step by step in an interactive session or an IDE. *IDE usage requires access to local installations of BLAST, MUSCLE, and DSSP by the IDE.*
 
 ### Macro scripts
 The scripts `install.R` and `single_score.R` are provided in the **scripts** folder of this repo to enable one-command operation.
@@ -151,7 +151,7 @@ To run, download the `install.R` and `single_score.R` scripts from this reposito
   - This file need to be re-run if the user changes the species considered in the multiple sequence alignment.
 
 - [single_score.R](https://github.com/henrichung/epitope_tag/blob/main/scripts/single_score.R)
-  - This script takes a UniprotID as input and performs the Epictope workflow for that protein.
+  - This script takes a UniprotID as input and performs the EpicTope workflow for that protein.
   - It first retrieves the amino acid sequence and Alphafold2 predicted structure for the protein.
   - It then BLASTs the protein against the proteomes of the animals used in the multiple sequence alignment, retrieves the highest scoring match (score measured by the lowest E-value), and aligns the matched proteins along with the query in a multiple sequence alignment.
   - It then determines the secondary structure, solvent accessibility, and disordered binding regions for the protein.
@@ -172,11 +172,11 @@ Each script can also be opened in an IDE such as Rstudio, and run interactively 
 
 ### User configuration
 
-A second scoring function used by Epictope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
+A second scoring function used by EpicTope sums the calculated scores for the protein features, with equal weight assigned to secondary structure, disordered binding regions, and solvent accessibility. Sequence conservation carries by default carries a higher weight, at 1.5 times that of the other features.
 
-Users can adjust the weight of each feature by modifying the "config_defaults.R" file. This file allows fine-tuning of parameters in Epictope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
+Users can adjust the weight of each feature by modifying the "config_defaults.R" file. This file allows fine-tuning of parameters in EpicTope, including the weight of each feature, defining the species used in the multiple sequence alignment, scoring tag suitability for secondary structures, and determining maximum solvent accessibility values.
 
-Epictope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config_defaults.R" value is provided. To use, edit and rename the file to "config.R" and place it anywhere in your project directory. 
+EpicTope searches for a "config.R" file in the working directory. If it doesn't find one, it will utilize default values. In the scripts folder, an example "config_defaults.R" value is provided. To use, edit and rename the file to "config.R" and place it anywhere in your project directory. 
 
 ### Frequently Asked Questions
 
@@ -184,4 +184,4 @@ A growing FAQ can be found in our repository wiki [page](https://github.com/henr
 
 ## License 
 
-Epictope is distributed open-source under the GPL3 license.
+EpicTope is distributed open-source under the GPL3 license.
