@@ -1,5 +1,21 @@
 #!/bin/bash
-# Install conda
+
+# Check if conda is installed
+if ! command -v conda &> /dev/null
+then
+    echo "Conda is not installed, installing..."
+    # Install conda (Miniconda)
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    bash Miniconda3-latest-Linux-x86_64.sh
+    rm Miniconda3-latest-Linux-x86_64.sh
+    # Initialize conda for bash shell
+    source ~/.bashrc
+    echo "Conda installed successfully"
+else
+    echo "Conda is already installed"
+fi
+
+# Create a new conda environment for epictope
 conda create -n epictope
 conda activate epictope
 conda install -c bioconda blast muscle
