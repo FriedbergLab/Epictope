@@ -25,9 +25,9 @@ if ! command -v conda &> /dev/null; then
     rm $installer_name
     # Initialize 
     source ~/.bashrc
-    echo "Conda installed successfully"
+    echo "Conda installed successfully. Please close and restart your terminal."
 else
-    echo "Conda is already installed"
+    echo "Conda is already installed."
 fi
 
 
