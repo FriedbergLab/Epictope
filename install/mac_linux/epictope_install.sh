@@ -1,19 +1,35 @@
 #!/bin/bash
 
 # Check if conda is installed
-if ! command -v conda &> /dev/null
-then
+if ! command -v conda &> /dev/null; then
     echo "Conda is not installed, installing..."
-    # Install conda (Miniconda)
-    curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    bash Miniconda3-latest-Linux-x86_64.sh
-    rm Miniconda3-latest-Linux-x86_64.sh
-    # Initialize conda for bash shell
+
+    # Determine the OS and set the appropriate miniconda installer URL
+    case "$(uname -s)" in
+        Darwin)
+            installer_url="https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
+            installer_name="Miniconda3-latest-MacOSX-x86_64.sh"
+            ;;
+        Linux)
+            installer_url="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+            installer_name="Miniconda3-latest-Linux-x86_64.sh"
+            ;;
+        *)
+            echo "Unsupported operating system."
+            exit 1
+            ;;
+    esac
+    # Download and install conda 
+    curl -O $installer_url
+    bash $installer_name
+    rm $installer_name
+    # Initialize 
     source ~/.bashrc
     echo "Conda installed successfully"
 else
     echo "Conda is already installed"
 fi
+
 
 # Create a new conda environment for epictope
 conda create -n epictope
