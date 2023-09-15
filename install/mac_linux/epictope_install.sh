@@ -40,10 +40,10 @@ else
     # Install R packages
     R -e "remotes::install_github('henrichung/epitope_tag')"
     # Install epitope_tag scripts
-    curl "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R" 
-    curl "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/plot_scores.R" 
-    curl "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/install.R"
-    curl "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/config_defaults.R" 
+    curl -O "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R" 
+    curl -O "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/plot_scores.R" 
+    curl -O "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/install.R"
+    curl -O "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/config_defaults.R" 
 fi
 
 
