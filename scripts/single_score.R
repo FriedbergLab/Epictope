@@ -13,7 +13,11 @@ uniprot_data <- query_uniProt(query = query, fields = uniprot_fields)
 
 ####
 # download associated alphafold2 pdb
+if(is.na(uniprot_data$AlphaFoldDB)){
+  message("WARNING. NO CROSSREFERENCE ALPHAFOLD ENTRY FOUND; ATTEMPTING DIRECT LOOKUP. RESULTS MAY BE LOW CONFIDENCE.")
+  uniprot_data$AlphaFoldDB <- query}
 alphafold_file <- fetch_alphafold(gsub(";", "", uniprot_data$AlphaFoldDB))
+if(is.na(alphafold_file)){stop("No alphafold file found for ", uniprot_id)}
 # calculate dssp on alphafold pdb file
 dssp_res <- dssp_command(alphafold_file)
 # parse and read in dssp
@@ -43,6 +47,10 @@ blast_stringset  <- Biostrings::AAStringSet(unlist(lapply(blast_seqs, function(.
 
 # multiple sequence alignment
 msa_res <-  muscle(blast_stringset)
+# write msa to file
+# convert to XStringSet
+msa_res <- Biostrings::AAStringSet(msa_res)
+Biostrings::writeXStringSet(msa_res, file = paste0(outputFolder, "/", query, "_msa.fasta"))
 # shannon entropy calculation
 shannon_df <- shannon_reshape(msa_res, query)
 

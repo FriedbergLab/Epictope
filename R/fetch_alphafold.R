@@ -42,9 +42,13 @@ fetch_alphafold <- function(protein_id) {
   # Try to download the Alphafold2 protein structure prediction using the specified URL and save it to the output file
   res <- tryCatch(
     {
-      download.file(download_url, destfile = output_file, method = "curl")
-      message("Downloading Alphafold2 PDB for ", protein_id)
-      return(output_file)
+      if (httr::http_error(GET(download_url))) {
+        return(NA)
+        } else {
+        download.file(download_url, destfile = output_file, method = "wget", extra = "-nc", quiet = TRUE)
+        message("Downloading Alphafold2 PDB for ", .x)
+        return(output_file)
+        }
     },
     # If the download fails, display an error message
     error = function(cond) {
