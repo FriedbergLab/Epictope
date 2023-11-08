@@ -46,7 +46,6 @@ fetch_alphafold <- function(protein_id) {
         return(NA)
         } else {
         download.file(download_url, destfile = output_file, method = "curl", quiet = TRUE)  
-        #message("Downloading Alphafold2 PDB for ", .x)
         return(output_file)
         }
     },

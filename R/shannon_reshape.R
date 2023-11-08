@@ -12,7 +12,7 @@
 
 shannon_reshape <- function(msa, query) {
   # Extract MSA as a matrix
-  mat <- as.matrix(msa@unmasked)
+  mat <- as.matrix(msa)
 
   # Determine the row for the query sequence
   chars <- mat[query,]
