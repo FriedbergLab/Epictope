@@ -45,7 +45,7 @@ fetch_alphafold <- function(protein_id) {
       if (httr::http_error(GET(download_url))) {
         return(NA)
         } else {
-        download.file(download_url, destfile = output_file, method = "wget", extra = "-nc", quiet = TRUE)
+        download.file(download_url, destfile = output_file, method = "curl", quiet = TRUE)  
         message("Downloading Alphafold2 PDB for ", .x)
         return(output_file)
         }
