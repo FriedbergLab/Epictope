@@ -180,7 +180,7 @@ EpicTope searches for a "config.R" file in the working directory. If it doesn't 
 
 ### Frequently Asked Questions
 
-A growing FAQ can be found in our repository wiki [page](https://github.com/FriedbergLab/EpicTope/epitope_tag/wiki/F.A.Q).
+A growing FAQ can be found in our repository wiki [page](https://github.com/FriedbergLab/EpicTope/wiki/F.A.Q).
 
 ## License 
 
