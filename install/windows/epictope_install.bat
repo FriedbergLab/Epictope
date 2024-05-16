@@ -54,8 +54,8 @@ if exist muscle.exe (
 :: EPICTOPE INSTALLATION
 :: Check if the file exists
 call conda activate epictope
-call R -e "remotes::install_github('henrichung/epitope_tag')"
-call curl -o "single_score.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R"
-call curl -o "plot_scores.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/plot_scores.R"
-call curl -o "install.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/install.R"
-call curl -o "config_defaults.R" "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/config_defaults.R"
+call R -e "remotes::install_github('FriedbergLab/EpicTope')"
+call curl -o "single_score.R" "https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/scripts/single_score.R"
+call curl -o "plot_scores.R" "https://github.com/FriedbergLab/EpicTope/blob/main/scripts/plot_scores.R"
+call curl -o "install.R" "https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/scripts/install.R"
+call curl -o "config_defaults.R" "https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/scripts/config_defaults.R"
