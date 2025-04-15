@@ -38,7 +38,7 @@ else
     conda install -c conda-forge r-base r-stringi r-openssl r-remotes python>=3.11.4
     
     # Install R packages
-    R -e "remotes::install_github('henrichung/epitope_tag')"
+    R -e "remotes::install_github('FriedbergLab/EpicTope')"
     # Install epitope_tag scripts
     curl -O "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/single_score.R" 
     curl -O "https://raw.githubusercontent.com/henrichung/epitope_tag/main/scripts/plot_scores.R" 
