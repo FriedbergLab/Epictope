@@ -31,14 +31,19 @@ else
 
     # Create a new conda environment for epictope
     conda create -n epictope
-    conda activate epictope
-    conda install -c bioconda blast muscle
-    conda install -c salilab dssp
-    conda install -c anaconda "openssl>=3.0.9"
-    conda install -c conda-forge r-base r-stringi r-openssl r-remotes "python>=3.11.4"
+    conda install -n epictope -c bioconda blast muscle
+    conda install -n epictope -c salilab dssp
+    conda install -n epictope -c anaconda "openssl>=3.0.9"
+    conda install -n epictope -c conda-forge r-base r-stringi r-openssl r-remotes "python>=3.11.4"
+    conda install -n epictope libboost=1.73.0 # for compatibility for dssp 3
     
-    # Install R packages
+    # Install R packages in the epictope environment
+    (
+    source $(conda info --base)/etc/profile.d/conda.sh
+    conda activate epictope
     R -e "remotes::install_github('FriedbergLab/EpicTope')"
+    conda deactivate
+    )
     # Install epitope_tag scripts
     curl -O "https://raw.githubusercontent.com/FriedbergLab/Epictope/main/scripts/single_score.R" 
     curl -O "https://raw.githubusercontent.com/FriedbergLab/Epictope/main/scripts/plot_scores.R" 
