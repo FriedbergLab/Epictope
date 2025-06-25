@@ -31,10 +31,10 @@ else
 
     # Create a new conda environment for epictope
     conda create -n epictope
-    conda install -n epictope -c bioconda --override-channels blast muscle
-    conda install -n epictope -c salilab --override-channels dssp
-    conda install -n epictope -c anaconda --override-channels "openssl>=3.0.9"
-    conda install -n epictope -c conda-forge --override-channels r-base r-stringi r-openssl r-remotes "python>=3.11.4"
+    conda install -n epictope -c bioconda blast muscle
+    conda install -n epictope -c salilab dssp
+    conda install -n epictope -c anaconda "openssl>=3.0.9"
+    conda install -n epictope -c conda-forge r-base r-stringi r-openssl r-remotes "python>=3.11.4"
     conda install -n epictope libboost=1.73.0 # for compatibility for dssp 3
     
     # Install R packages in the epictope environment
