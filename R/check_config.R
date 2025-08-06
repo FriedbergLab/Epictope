@@ -41,7 +41,8 @@ check_config <- function() {
       "C" = 1,
       "T" = 0.5,
       "B" = 0.5,
-      "S" = 0.5)
+      "S" = 0.5,
+      "P" = 0)
     assign("ss_key", ss_key, envir = .GlobalEnv)
 
     # reference values for maximum solvent accessibility of amino acids.
