@@ -54,6 +54,7 @@ if exist muscle.exe (
 :: EPICTOPE INSTALLATION
 :: Check if the file exists
 call conda activate epictope
+call R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager', repos='https://cloud.r-project.org'); BiocManager::install(c('S4Vectors','IRanges','XVector','Biostrings','GenomeInfoDb'), ask=FALSE)"
 call R -e "remotes::install_github('FriedbergLab/EpicTope')"
 call curl -o "single_score.R" "https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/scripts/single_score.R"
 call curl -o "plot_scores.R" "https://raw.githubusercontent.com/FriedbergLab/Epictope/main/scripts/plot_scores.R"
