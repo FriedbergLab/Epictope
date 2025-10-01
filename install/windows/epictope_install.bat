@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
 )
 :: activate the 'Epictope' environment and install dependencies
 call conda activate epictope
-call conda install -c speleo3 dssp
+call conda install phenix-project::dssp
 call conda install -c conda-forge r-base r-stringi r-openssl r-remotes
 :: report success
 echo Epictope environment installation complete.
