@@ -79,9 +79,6 @@ Additional installation methods for Linux can be found in the Detailed Installat
 
 BLAST and MUSCLE are not available for installation on Windows with conda and have to be installed separately. We provide a wrapper script to install these programs and the conda environment. 
 
-Sure, here are the detailed steps to open Anaconda Prompt, create a new project folder, and then 'cd' (change directory) into it on a Windows machine:
-
-
 1. In Anaconda prompt, download and place the "epictope_install.bat" folder into your project directory with curl. Type "dir" to verify the files are in the correct folder.
 ```bash
 curl -o epictope_install.bat https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/install/windows/epictope_install.bat
