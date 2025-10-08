@@ -14,10 +14,14 @@ if %errorlevel% neq 0 (
 )
 :: activate the 'Epictope' environment and install dependencies
 call conda activate epictope
-call conda install -c speleo3 dssp
-call conda install -c conda-forge r-base r-stringi r-openssl r-remotes
+call conda install -c speleo3 dssp --yes
+call conda install -c conda-forge r-base r-stringi r-openssl r-remotes --yes
 :: report success
 echo Epictope environment installation complete.
+
+:: Installing Bioconductor dependencies inside conda env
+echo Installing Bioconductor dependencies inside conda environment...
+call R -e "rlib <- file.path(Sys.getenv('CONDA_PREFIX'),'Lib','R','library'); if(!dir.exists(rlib)) dir.create(rlib, recursive=TRUE); .libPaths(rlib); if(!requireNamespace('BiocManager', quietly=TRUE)) install.packages('BiocManager', repos='https://cloud.r-project.org'); BiocManager::install(c('S4Vectors','IRanges','XVector','Biostrings','GenomeInfoDb'), ask=FALSE)"
 
 :: BLAST INSTALLATION
 :: Check if the file exists
@@ -54,8 +58,9 @@ if exist muscle.exe (
 :: EPICTOPE INSTALLATION
 :: Check if the file exists
 call conda activate epictope
-call R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager', repos='https://cloud.r-project.org'); BiocManager::install(c('S4Vectors','IRanges','XVector','Biostrings','GenomeInfoDb'), ask=FALSE)"
-call R -e "remotes::install_github('FriedbergLab/EpicTope')"
+echo Installing EpicTope from GitHub...
+call R -e "rlib <- file.path(Sys.getenv('CONDA_PREFIX'),'Lib','R','library'); .libPaths(rlib); remotes::install_github('FriedbergLab/EpicTope')"
+
 call curl -o "single_score.R" "https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/scripts/single_score.R"
 call curl -o "plot_scores.R" "https://raw.githubusercontent.com/FriedbergLab/Epictope/main/scripts/plot_scores.R"
 call curl -o "install.R" "https://raw.githubusercontent.com/FriedbergLab/EpicTope/main/scripts/install.R"
