@@ -1,5 +1,7 @@
-
 #!/usr/bin/env Rscript
+# Ensure R uses the conda environment library
+.libPaths(file.path(Sys.getenv("CONDA_PREFIX"), "Lib", "R", "library"))
+
 args <- commandArgs(trailingOnly = TRUE)
 filename <- args[1]
 output_filename <- gsub(".csv", ".tiff", filename)
