@@ -20,7 +20,7 @@ if(is.na(uniprot_data$AlphaFoldDB)){
   message("WARNING. NO CROSSREFERENCE ALPHAFOLD ENTRY FOUND; ATTEMPTING DIRECT LOOKUP. RESULTS MAY BE LOW CONFIDENCE.")
   uniprot_data$AlphaFoldDB <- query}
 alphafold_file <- fetch_alphafold(gsub(";", "", uniprot_data$AlphaFoldDB))
-if(is.na(alphafold_file)){stop("No alphafold file found for ", uniprot_id)}
+if(is.na(alphafold_file)){stop("No alphafold file found for ", query)}
 # calculate dssp on alphafold pdb file
 dssp_res <- dssp_command(alphafold_file)
 # parse and read in dssp
