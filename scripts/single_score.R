@@ -1,4 +1,7 @@
 #!/usr/bin/env Rscript
+# Ensure R uses the conda environment library
+.libPaths(file.path(Sys.getenv("CONDA_PREFIX"), "Lib", "R", "library"))
+
 # load required packages
 library(epictope)
 rm(list = ls())
