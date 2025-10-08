@@ -22,7 +22,7 @@ fetch_alphafold <- function(protein_id) {
   base_url <- "https://alphafold.ebi.ac.uk/files/"
 
   # Set the version suffix
-  version_suffix <- "-F1-model_v4.pdb"
+  version_suffix <- "-F1-model_v6.pdb"
 
   # Define output filename
   filename <- paste0("AF-", protein_id, version_suffix)
@@ -59,3 +59,4 @@ fetch_alphafold <- function(protein_id) {
 
   return(res)
 }
+
